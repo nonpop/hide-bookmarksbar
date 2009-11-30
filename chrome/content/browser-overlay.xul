@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE window SYSTEM "chrome://hidebookmarksbar/locale/browser-overlay.dtd">
+<overlay id="hidebookmarksbarOverlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script src="browser-overlay.js" />
+	<keyset id="mainKeyset">
+		<key id="hidebookmarksbarKeyset"
+		     modifiers="&hidebookmarksbar.keyModifiers;"
+		     key="&hidebookmarksbar.key;" 
+		     oncommand="hidebookmarksbar.toggle();" />
+	</keyset>   
+	
+	<toolbarpalette id="BrowserToolbarPalette">
+		<toolbarbutton id="hidebookmarksbarButton"
+		               type="menu-button"
+		               label="&hidebookmarksbar.toolbarButtonLabel;"
+		               title="&hidebookmarksbar.toolbarButtonTitle;"
+		               image="chrome://browser/skin/places/pageStarred.png"
+		               oncommand="if(event.target==this) hidebookmarksbar.toggle();">
+			<menupopup>
+				<menuitem label="Einstellungen" oncommand="hidebookmarksbar.openOptions();event.preventDefault()" />
+			</menupopup>
+		</toolbarbutton>
+	</toolbarpalette>
+</overlay>
