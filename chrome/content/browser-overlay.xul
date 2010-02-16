@@ -18,7 +18,7 @@
 		               title="&hidebookmarksbar.toolbarButtonTitle;"
 		               oncommand="if(event.target==this) hidebookmarksbar.toggle();">
 			<menupopup>
-				<menuitem label="Einstellungen" oncommand="hidebookmarksbar.openOptions();event.preventDefault()" />
+				<menuitem label="&hidebookmarksbar.toolbarSettings;" oncommand="hidebookmarksbar.openOptions();event.preventDefault()" />
 			</menupopup>
 		</toolbarbutton>
 	</toolbarpalette>
