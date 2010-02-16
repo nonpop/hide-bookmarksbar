@@ -1,0 +1,17 @@
+<!ENTITY hidebookmarksbar.windowtitle "Hide BookmarksBar - Settings">
+<!ENTITY hidebookmarksbar.panetitle "Settings">
+
+<!ENTITY hidebookmarksbar.startup "At startup:">
+<!ENTITY hidebookmarksbar.defaultHide "Hide bookmarks toolbar">
+<!ENTITY hidebookmarksbar.defaultShow "Show bookmarks toolbar">
+<!ENTITY hidebookmarksbar.defaultRestore "Restore last state">
+
+<!ENTITY hidebookmarksbar.shortcut "Enable keybinding">
+<!ENTITY hidebookmarksbar.key_ctrl "CTRL">
+<!ENTITY hidebookmarksbar.key_shift "Shift">
+<!ENTITY hidebookmarksbar.key_alt "Alt">
+<!ENTITY hidebookmarksbar.keydescription "Changes to the keybinding will be applied to new Firefox windows only. You may need to restart Firefox.">
+
+<!ENTITY hidebookmarksbar.toolbarbuttonCaption "Toolbar:">
+<!ENTITY hidebookmarksbar.toolbarbutton "Select &quot;View|Toolbars|Customize&quot; and drag the button &quot;Bookmarks Toolbar&quot; to the toolbar.">
+
