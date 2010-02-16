@@ -1,0 +1,9 @@
+#hidebookmarksbarButton
+{
+	list-style-image:url(star32.png);
+}
+toolbar[iconsize="small"] #hidebookmarksbarButton
+{
+	list-style-image:url(star.png);
+}
+
