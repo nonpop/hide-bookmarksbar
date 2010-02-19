@@ -22,7 +22,10 @@ var hidebookmarksbar =
 		else
 			this.visible = this.prefs.getBoolPref("visible");
 		
-		this.setMode();    
+		this.setMode();
+		
+		var popup = document.getElementById("hidebookmarksbarButton");
+		popup.type = this.prefs.getBoolPref(data) ? "menu-button" : "button";
 	},
 	
 	onUnload: function()
@@ -40,8 +43,13 @@ var hidebookmarksbar =
 		switch(data)
 		{
 			case "visible":
-				this.visible = this.prefs.getBoolPref("visible");
+				this.visible = this.prefs.getBoolPref(data);
 				this.setMode();
+				break;
+			
+			case "popup":
+				var popup = document.getElementById("hidebookmarksbarButton");
+				popup.type = this.prefs.getBoolPref(data) ? "menu-button" : "button";
 				break;
 		}
 	},

@@ -13,9 +13,10 @@
 	
 	<toolbarpalette id="BrowserToolbarPalette">
 		<toolbarbutton id="hidebookmarksbarButton"
+		               class="toolbarbutton-1"
 		               type="menu-button"
 		               label="&hidebookmarksbar.toolbarButtonLabel;"
-		               title="&hidebookmarksbar.toolbarButtonTitle;"
+		               tooltiptext="&hidebookmarksbar.toolbarButtonTitle;"
 		               oncommand="if(event.target==this) hidebookmarksbar.toggle();">
 			<menupopup>
 				<menuitem label="&hidebookmarksbar.toolbarSettings;" oncommand="hidebookmarksbar.openOptions();event.preventDefault()" />
