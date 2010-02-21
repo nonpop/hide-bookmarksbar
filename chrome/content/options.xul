@@ -37,23 +37,25 @@
 			           />
 		</preferences>
 		
-		<groupbox>
-			<caption><label control="startup" value="&hidebookmarksbar.startup;" /></caption>
-			<radiogroup preference="pref_startup" class="radioGroup" id="startup">
-				<radio label="&hidebookmarksbar.defaultHide;" value="0" />
-				<radio label="&hidebookmarksbar.defaultShow;" value="1" />
-				<radio label="&hidebookmarksbar.defaultRestore;" value="2" />
-			</radiogroup> 
-		</groupbox>
-		
-		<groupbox>
-			<caption><label control="newwindow" value="&hidebookmarksbar.newwindow;" /></caption>
-			<radiogroup preference="pref_newwindow" class="radioGroup" id="newwindow">
-				<radio label="&hidebookmarksbar.defaultHide;" value="0" />
-				<radio label="&hidebookmarksbar.defaultShow;" value="1" />
-				<radio label="&hidebookmarksbar.defaultInherit;" value="2" />
-			</radiogroup> 
-		</groupbox>
+		<hbox>
+			<groupbox flex="1">
+				<caption><label control="startup" value="&hidebookmarksbar.startup;" /></caption>
+				<radiogroup preference="pref_startup" class="radioGroup" id="startup">
+					<radio label="&hidebookmarksbar.defaultHide;" value="0" />
+					<radio label="&hidebookmarksbar.defaultShow;" value="1" />
+					<radio label="&hidebookmarksbar.defaultRestore;" value="2" />
+				</radiogroup>
+			</groupbox>
+			
+			<groupbox flex="1">
+				<caption><label control="newwindow" value="&hidebookmarksbar.newwindow;" /></caption>
+				<radiogroup preference="pref_newwindow" class="radioGroup" id="newwindow">
+					<radio label="&hidebookmarksbar.defaultHide;" value="0" />
+					<radio label="&hidebookmarksbar.defaultShow;" value="1" />
+					<radio label="&hidebookmarksbar.defaultInherit;" value="2" />
+				</radiogroup>
+			</groupbox>
+		</hbox>
 		
 		<groupbox>
 			<caption><checkbox id="checkbox_enabled" preference="pref_key_enabled" label="&hidebookmarksbar.shortcut;"/></caption>
