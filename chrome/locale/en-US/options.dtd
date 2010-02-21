@@ -2,9 +2,11 @@
 <!ENTITY hidebookmarksbar.panetitle "Settings">
 
 <!ENTITY hidebookmarksbar.startup "At startup:">
+<!ENTITY hidebookmarksbar.newwindow "On opening another window:">
 <!ENTITY hidebookmarksbar.defaultHide "Hide bookmarks toolbar">
 <!ENTITY hidebookmarksbar.defaultShow "Show bookmarks toolbar">
 <!ENTITY hidebookmarksbar.defaultRestore "Restore last state">
+<!ENTITY hidebookmarksbar.defaultInherit "Inherit from last window">
 
 <!ENTITY hidebookmarksbar.shortcut "Enable keybinding">
 <!ENTITY hidebookmarksbar.key_ctrl "CTRL">

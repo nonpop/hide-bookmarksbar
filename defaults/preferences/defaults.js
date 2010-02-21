@@ -1,4 +1,5 @@
 pref("extensions.hidebookmarksbar.startup", 2);
+pref("extensions.hidebookmarksbar.newwindow", 2);
 pref("extensions.hidebookmarksbar.popup", true);
 pref("extensions.hidebookmarksbar.visible", true);
 

@@ -2,9 +2,11 @@
 <!ENTITY hidebookmarksbar.panetitle "Einstellungen">
 
 <!ENTITY hidebookmarksbar.startup "Beim Starten:">
+<!ENTITY hidebookmarksbar.newwindow "Beim Öffnen eines weiteren Fensters:">
 <!ENTITY hidebookmarksbar.defaultHide "Lesezeichenleiste verstecken">
 <!ENTITY hidebookmarksbar.defaultShow "Lesezeichenleiste anzeigen">
 <!ENTITY hidebookmarksbar.defaultRestore "Letzten Zustand wiederherstellen">
+<!ENTITY hidebookmarksbar.defaultInherit "Vom letzen Fenster übernehmen">
 
 <!ENTITY hidebookmarksbar.shortcut "Tastenkombination aktivieren">
 <!ENTITY hidebookmarksbar.key_ctrl "STRG">

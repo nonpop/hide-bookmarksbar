@@ -14,6 +14,10 @@
 			            name="extensions.hidebookmarksbar.startup"
 			            type="int"
 			           />
+			<preference id="pref_newwindow"
+			            name="extensions.hidebookmarksbar.newwindow"
+			            type="int"
+			           />
 			<preference id="pref_key_enabled"
 			            name="extensions.hidebookmarksbar.shortcut.enabled"
 			            type="bool"
@@ -32,12 +36,22 @@
 			            type="bool"
 			           />
 		</preferences>
+		
 		<groupbox>
 			<caption><label control="startup" value="&hidebookmarksbar.startup;" /></caption>
 			<radiogroup preference="pref_startup" class="radioGroup" id="startup">
 				<radio label="&hidebookmarksbar.defaultHide;" value="0" />
 				<radio label="&hidebookmarksbar.defaultShow;" value="1" />
 				<radio label="&hidebookmarksbar.defaultRestore;" value="2" />
+			</radiogroup> 
+		</groupbox>
+		
+		<groupbox>
+			<caption><label control="newwindow" value="&hidebookmarksbar.newwindow;" /></caption>
+			<radiogroup preference="pref_newwindow" class="radioGroup" id="newwindow">
+				<radio label="&hidebookmarksbar.defaultHide;" value="0" />
+				<radio label="&hidebookmarksbar.defaultShow;" value="1" />
+				<radio label="&hidebookmarksbar.defaultInherit;" value="2" />
 			</radiogroup> 
 		</groupbox>
 		

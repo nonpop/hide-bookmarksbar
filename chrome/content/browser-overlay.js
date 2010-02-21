@@ -5,9 +5,19 @@ var hidebookmarksbar =
 	
 	onLoad: function()
 	{
+		var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator);
+		var enumerator = wm.getEnumerator("navigator:browser");
+		for(var i=0;enumerator.hasMoreElements();i++)
+		{
+			enumerator.getNext();
+			if(i>=2)
+				break;
+		}
+		var firstwindow = (i==1);
+		
 		this.prefs = Components.classes["@mozilla.org/preferences-service;1"]
-		.getService(Components.interfaces.nsIPrefService)
-		.getBranch("extensions.hidebookmarksbar.");
+		                       .getService(Components.interfaces.nsIPrefService)
+		                       .getBranch("extensions.hidebookmarksbar.");
 		this.prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
 		this.prefs.addObserver("", this, false);
 		
@@ -16,11 +26,18 @@ var hidebookmarksbar =
 		key.setAttribute("key",       this.prefs.getCharPref("shortcut.key"));
 		key.setAttribute("disabled", !this.prefs.getBoolPref("shortcut.enabled"));
 		
-		var startup = this.prefs.getIntPref("startup");
+		if(firstwindow)
+			var startup = this.prefs.getIntPref("startup");
+		else
+			var startup = this.prefs.getIntPref("newwindow");
+		
 		if(startup < 2)
 			this.visible = !!startup;
 		else
 			this.visible = this.prefs.getBoolPref("visible");
+		
+		if(firstwindow)
+			this.prefs.setBoolPref("visible", this.visible);
 		
 		this.setMode();
 		
@@ -56,6 +73,10 @@ var hidebookmarksbar =
 	
 	toggle: function()
 	{
+		/* If the preference is already as it should be set, we must toggle it twice */
+		if(this.prefs.getBoolPref("visible") != this.visible)
+			this.prefs.setBoolPref("visible", this.visible);
+		
 		this.prefs.setBoolPref("visible", !this.visible);
 	},
 	

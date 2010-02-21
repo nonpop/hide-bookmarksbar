@@ -2,4 +2,8 @@ prefpane > .content-box
 {
 	overflow:visible;
 }
+.paneDeckContainer
+{
+	overflow:auto;
+}
 
