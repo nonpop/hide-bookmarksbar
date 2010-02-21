@@ -25,7 +25,7 @@ var hidebookmarksbar =
 		this.setMode();
 		
 		var popup = document.getElementById("hidebookmarksbarButton");
-		popup.type = this.prefs.getBoolPref(data) ? "menu-button" : "button";
+		popup.type = this.prefs.getBoolPref("popup") ? "menu-button" : "button";
 	},
 	
 	onUnload: function()
