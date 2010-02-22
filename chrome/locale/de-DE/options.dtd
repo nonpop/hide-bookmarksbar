@@ -10,6 +10,7 @@
 
 <!ENTITY hidebookmarksbar.shortcut "Tastenkombination aktivieren">
 <!ENTITY hidebookmarksbar.key_ctrl "STRG">
+<!ENTITY hidebookmarksbar.key_cmd "cmd">
 <!ENTITY hidebookmarksbar.key_shift "Umschalt">
 <!ENTITY hidebookmarksbar.key_alt "Alt">
 <!ENTITY hidebookmarksbar.keydescription "Änderungen an der Tastenkombination werden erst in einem neuen Firefox-Fenster übernommen. Sie müssen Firefox eventuell neu starten.">

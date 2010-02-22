@@ -10,6 +10,7 @@
 
 <!ENTITY hidebookmarksbar.shortcut "Enable keybinding">
 <!ENTITY hidebookmarksbar.key_ctrl "CTRL">
+<!ENTITY hidebookmarksbar.key_cmd "Command">
 <!ENTITY hidebookmarksbar.key_shift "Shift">
 <!ENTITY hidebookmarksbar.key_alt "Alt">
 <!ENTITY hidebookmarksbar.keydescription "Changes to the keybinding will be applied to new Firefox windows only. You may need to restart Firefox.">
