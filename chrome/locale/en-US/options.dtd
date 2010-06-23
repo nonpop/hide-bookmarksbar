@@ -8,7 +8,7 @@
 <!ENTITY hidebookmarksbar.defaultRestore "Restore last state">
 <!ENTITY hidebookmarksbar.defaultInherit "Inherit from last window">
 
-<!ENTITY hidebookmarksbar.shortcut "Enable keybinding">
+<!ENTITY hidebookmarksbar.shortcut "Enable hotkey">
 <!ENTITY hidebookmarksbar.key_ctrl "CTRL">
 <!ENTITY hidebookmarksbar.key_cmd "Command">
 <!ENTITY hidebookmarksbar.key_shift "Shift">

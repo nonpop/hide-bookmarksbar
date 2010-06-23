@@ -1,6 +1,6 @@
 function init()
 {
-	if(1||/^Mac/.test(navigator.platform))
+	if(/^Mac/.test(navigator.platform))
 	{
 		var label = document.getElementById("checkbox_ctrl");
 		label.setAttribute("label", label.getAttribute("labelmac"));
