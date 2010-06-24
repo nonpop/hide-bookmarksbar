@@ -41,8 +41,9 @@ var hidebookmarksbar =
 		
 		this.setMode();
 		
-		var popup = document.getElementById("hidebookmarksbarButton");
-		popup.type = this.prefs.getBoolPref("popup") ? "menu-button" : "button";
+		var button = document.getElementById("hidebookmarksbarButton");
+		if(button)
+			button.type = this.prefs.getBoolPref("popup") ? "menu-button" : "button";
 	},
 	
 	onUnload: function()
@@ -65,8 +66,9 @@ var hidebookmarksbar =
 				break;
 			
 			case "popup":
-				var popup = document.getElementById("hidebookmarksbarButton");
-				popup.type = this.prefs.getBoolPref(data) ? "menu-button" : "button";
+				var button = document.getElementById("hidebookmarksbarButton");
+				if(button)
+					button.type = this.prefs.getBoolPref(data) ? "menu-button" : "button";
 				break;
 		}
 	},
