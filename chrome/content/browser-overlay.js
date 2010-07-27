@@ -5,6 +5,7 @@ var hidebookmarksbar =
 	
 	onLoad: function()
 	{
+		var self = this;
 		var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator);
 		var enumerator = wm.getEnumerator("navigator:browser");
 		for(var i=0;enumerator.hasMoreElements();i++)
@@ -25,6 +26,39 @@ var hidebookmarksbar =
 		key.setAttribute("modifiers", this.prefs.getCharPref("shortcut.modifiers"));
 		key.setAttribute("key",       this.prefs.getCharPref("shortcut.key"));
 		key.setAttribute("disabled", !this.prefs.getBoolPref("shortcut.enabled"));
+		
+		/* Firefox 4: Dropdown of Bookmarks-Button */
+		if(document.getElementById("BMB_viewBookmarksToolbar"))
+		{
+			var menuitem = document.getElementById("BMB_viewBookmarksToolbar");
+			var label = [];
+			var modifiers = this.prefs.getCharPref("shortcut.modifiers");
+			if(modifiers.indexOf("accel") != -1)
+			{
+				if(/^Mac/.test(navigator.platform))
+					label.push(key.getAttribute("cmdlabel"));
+				else
+					label.push(key.getAttribute("ctrllabel"));
+			}
+			if(modifiers.indexOf("shift") != -1)
+				label.push(key.getAttribute("shiftlabel"));
+			if(modifiers.indexOf("alt") != -1)
+				label.push(key.getAttribute("altlabel"));
+			label.push(this.prefs.getCharPref("shortcut.key"));
+			menuitem.setAttribute("acceltext", label.join("+"));
+			
+			this.oldOnViewToolbarCommand = window.onViewToolbarCommand
+			window.onViewToolbarCommand = function(aEvent)
+			{
+				self.oldOnViewToolbarCommand(aEvent);
+				
+				var visible = aEvent.originalTarget.getAttribute("checked") == "true";
+				/* If the preference is already as it should be set, we must toggle it twice */
+				if(self.prefs.getBoolPref("visible") == visible)
+					self.prefs.setBoolPref("visible", !visible);
+				self.prefs.setBoolPref("visible", visible);
+			}
+		}
 		
 		if(firstwindow)
 			var startup = this.prefs.getIntPref("startup");
@@ -85,7 +119,10 @@ var hidebookmarksbar =
 	setMode: function()
 	{
 		var toolbar = document.getElementById("PersonalToolbar");
-		toolbar.collapsed = !this.visible;
+		if(window.setToolbarVisibility)
+			window.setToolbarVisibility(toolbar, this.visible); // Firefox 4
+		else
+			toolbar.collapsed = !this.visible; // pre Firefox 4
 	},
 	
 	openOptions: function()

@@ -9,7 +9,7 @@
 <!ENTITY hidebookmarksbar.defaultInherit "Inherit from last window">
 
 <!ENTITY hidebookmarksbar.shortcut "Enable hotkey">
-<!ENTITY hidebookmarksbar.key_ctrl "CTRL">
+<!ENTITY hidebookmarksbar.key_ctrl "Ctrl">
 <!ENTITY hidebookmarksbar.key_cmd "Command">
 <!ENTITY hidebookmarksbar.key_shift "Shift">
 <!ENTITY hidebookmarksbar.key_alt "Alt">
