@@ -6,10 +6,10 @@
 <!ENTITY hidebookmarksbar.defaultHide "Lesezeichenleiste verstecken">
 <!ENTITY hidebookmarksbar.defaultShow "Lesezeichenleiste anzeigen">
 <!ENTITY hidebookmarksbar.defaultRestore "Letzten Zustand wiederherstellen">
-<!ENTITY hidebookmarksbar.defaultInherit "Vom letzen Fenster übernehmen">
+<!ENTITY hidebookmarksbar.defaultInherit "Vom letzten Fenster übernehmen">
 
 <!ENTITY hidebookmarksbar.shortcut "Tastenkombination aktivieren">
-<!ENTITY hidebookmarksbar.key_ctrl "STRG">
+<!ENTITY hidebookmarksbar.key_ctrl "Strg">
 <!ENTITY hidebookmarksbar.key_cmd "cmd">
 <!ENTITY hidebookmarksbar.key_shift "Umschalt">
 <!ENTITY hidebookmarksbar.key_alt "Alt">
@@ -18,4 +18,9 @@
 <!ENTITY hidebookmarksbar.toolbarbuttonCaption "Symbolleiste:">
 <!ENTITY hidebookmarksbar.toolbarbutton "Wählen Sie &quot;Ansicht|Symbolleisten|Anpassen&quot; und ziehen Sie den Button &quot;Lesezeichenleiste&quot; in die Symbolleiste.">
 <!ENTITY hidebookmarksbar.popup "Einstellungen in einem Untermenü anzeigen">
+
+<!ENTITY hidebookmarksbar.hover "Die Leiste automatisch einblenden:">
+<!ENTITY hidebookmarksbar.hovernever "Nie">
+<!ENTITY hidebookmarksbar.hoverbutton "Beim Überfahren des &quot;Lesezeichen&quot;-Buttons mit der Maus">
+<!ENTITY hidebookmarksbar.hovertoolbox "Beim Überfahren einer Symbolleiste mit der Maus">
 

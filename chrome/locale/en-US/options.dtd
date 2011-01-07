@@ -19,3 +19,8 @@
 <!ENTITY hidebookmarksbar.toolbarbutton "Select &quot;View|Toolbars|Customize&quot; and drag the button &quot;Bookmarks Toolbar&quot; to the toolbar.">
 <!ENTITY hidebookmarksbar.popup "Show settings in a popup menu">
 
+<!ENTITY hidebookmarksbar.hover "Show the toolbar temporarily:">
+<!ENTITY hidebookmarksbar.hovernever "Never">
+<!ENTITY hidebookmarksbar.hoverbutton "On hovering the &quot;Bookmarks&quot; button with the mouse">
+<!ENTITY hidebookmarksbar.hovertoolbox "On hovering a toolbar with the mouse">
+

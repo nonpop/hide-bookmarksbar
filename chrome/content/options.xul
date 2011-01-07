@@ -36,6 +36,10 @@
 			            name="extensions.hidebookmarksbar.popup"
 			            type="bool"
 			           />
+			<preference id="pref_hover"
+			            name="extensions.hidebookmarksbar.hover"
+			            type="int"
+			           />
 		</preferences>
 		
 		<hbox>
@@ -93,6 +97,15 @@
 				          preference="pref_popup"
 				          label="&hidebookmarksbar.popup;"
 				         />
+		</groupbox>
+		
+		<groupbox>
+			<caption><label control="hover" value="&hidebookmarksbar.hover;" /></caption>
+			<radiogroup preference="pref_hover" class="radioGroup" id="hover">
+				<radio label="&hidebookmarksbar.hovernever;" value="0" />
+				<radio label="&hidebookmarksbar.hoverbutton;" value="1" />
+				<radio label="&hidebookmarksbar.hovertoolbox;" value="2" />
+			</radiogroup>
 		</groupbox>
 	</prefpane>
 </prefwindow>
