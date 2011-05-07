@@ -5,6 +5,17 @@ function init()
 		var label = document.getElementById("checkbox_ctrl");
 		label.setAttribute("label", label.getAttribute("labelmac"));
 	}
+	
+	document.getElementById("pref_hover_enabled").addEventListener("change", hoverChanged, false);
+	
+	setTimeout(hoverChanged, 0);
+}
+
+function hoverChanged()
+{
+	var hover = document.getElementById("pref_hover_enabled").value;
+	
+	document.getElementById("typeDeck").selectedIndex = hover?0:1;
 }
 
 function keyEnabledChanged()

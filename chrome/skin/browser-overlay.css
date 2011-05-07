@@ -10,4 +10,9 @@ toolbar[iconsize="small"] #hidebookmarksbarButton
 {
 	visibility:visible;
 }
+#BMB_viewBookmarksToolbar[hoverMode="true"],
+#BMB_viewBookmarksToolbar[hoverMode="true"] + menuseparator
+{
+	display:none;
+}
 

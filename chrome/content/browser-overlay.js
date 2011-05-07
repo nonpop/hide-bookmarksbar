@@ -1,11 +1,16 @@
 var hidebookmarksbar = 
 {
-	prefs: null,
-	visible: true,
+	prefs: null,         // pref system
+	visible: false,      // if the toolbar should be visible according to the preferences (manual mode)
+	popups: 0,           // if there are any popups (menus) open (which should prevent the toolbar from hiding)
+	hovered: false,      // if the toolbar should be visible because of the mouse position (hover mode)
+	hoverEnabled: false, // hover mode enabled?
+	hoverType: 0,        // which hover type (complete toolbox or only button)
+	hoverDelay: 0,       // delay between mouseout and hiding (only in hover mode)
+	timeout: null,       // timeout for delay
 	
 	onLoad: function()
 	{
-		var self = this;
 		var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator);
 		var enumerator = wm.getEnumerator("navigator:browser");
 		for(var i=0;enumerator.hasMoreElements();i++)
@@ -32,40 +37,50 @@ var hidebookmarksbar =
 		// Firefox 4: Dropdown of Bookmarks-Button
 		if(document.getElementById("BMB_viewBookmarksToolbar"))
 		{
-			var menuitem = document.getElementById("BMB_viewBookmarksToolbar");
-			var label = [];
-			var modifiers = this.prefs.getCharPref("shortcut.modifiers");
-			if(modifiers.indexOf("accel") != -1)
+			if(this.prefs.getBoolPref("shortcut.enabled"))
 			{
-				if(/^Mac/.test(navigator.platform))
-					label.push(key.getAttribute("cmdlabel"));
-				else
-					label.push(key.getAttribute("ctrllabel"));
+				var menuitem = document.getElementById("BMB_viewBookmarksToolbar");
+				
+				var label = [];
+				var modifiers = this.prefs.getCharPref("shortcut.modifiers");
+				if(modifiers.indexOf("accel") != -1)
+				{
+					if(/^Mac/.test(navigator.platform))
+						label.push(key.getAttribute("cmdlabel"));
+					else
+						label.push(key.getAttribute("ctrllabel"));
+				}
+				if(modifiers.indexOf("shift") != -1)
+					label.push(key.getAttribute("shiftlabel"));
+				if(modifiers.indexOf("alt") != -1)
+					label.push(key.getAttribute("altlabel"));
+				label.push(this.prefs.getCharPref("shortcut.key"));
+				menuitem.setAttribute("acceltext", label.join("+"));
 			}
-			if(modifiers.indexOf("shift") != -1)
-				label.push(key.getAttribute("shiftlabel"));
-			if(modifiers.indexOf("alt") != -1)
-				label.push(key.getAttribute("altlabel"));
-			label.push(this.prefs.getCharPref("shortcut.key"));
-			menuitem.setAttribute("acceltext", label.join("+"));
 			
 			this.oldOnViewToolbarCommand = window.onViewToolbarCommand
 			window.onViewToolbarCommand = function(aEvent)
 			{
-				self.oldOnViewToolbarCommand(aEvent);
+				hidebookmarksbar.oldOnViewToolbarCommand(aEvent);
+				if(!hidebookmarksbar.hoverEnabled)
+				{
+					var visible = aEvent.originalTarget.getAttribute("checked") == "true";
+					
+					// If the preference is already as it should be set, we must toggle it twice
+					if(hidebookmarksbar.prefs.getBoolPref("visible") == visible)
+						hidebookmarksbar.prefs.setBoolPref("visible", !visible);
+					hidebookmarksbar.prefs.setBoolPref("visible", visible);
+				}
 				
-				var visible = aEvent.originalTarget.getAttribute("checked") == "true";
-				// If the preference is already as it should be set, we must toggle it twice
-				if(self.prefs.getBoolPref("visible") == visible)
-					self.prefs.setBoolPref("visible", !visible);
-				self.prefs.setBoolPref("visible", visible);
+				hidebookmarksbar.setVisible();
 			}
 		}
 		
 		// Show the toolbar for a short moment to load the bookmarks
 		this.visible = true;
-		this.setMode();
-		
+		this.hovered = true;
+		this.setVisible();
+		this.hovered = false;
 		
 		if(firstwindow)
 			var startup = this.prefs.getIntPref("startup");
@@ -80,13 +95,13 @@ var hidebookmarksbar =
 		if(firstwindow)
 			this.prefs.setBoolPref("visible", this.visible);
 		
-		this.setMode();
-		
 		var button = document.getElementById("hidebookmarksbarButton");
 		if(button)
 			button.type = this.prefs.getBoolPref("popup") ? "menu-button" : "button";
 		
-		this.hoverModeSetup();
+		this.hoverSetup();
+		
+		this.setVisible();
 	},
 	
 	onUnload: function()
@@ -105,7 +120,7 @@ var hidebookmarksbar =
 		{
 			case "visible":
 				this.visible = this.prefs.getBoolPref(data);
-				this.setMode();
+				this.setVisible();
 				break;
 			
 			case "popup":
@@ -114,8 +129,14 @@ var hidebookmarksbar =
 					button.type = this.prefs.getBoolPref(data) ? "menu-button" : "button";
 				break;
 			
-			case "hover":
-				this.hoverModeSetup();
+			case "hover.enabled":
+			case "hover.type":
+				this.hoverSetup();
+				this.setVisible();
+				break;
+			
+			case "hover.delay":
+				this.hoverDelay = this.prefs.getIntPref(data);
 				break;
 		}
 	},
@@ -132,13 +153,33 @@ var hidebookmarksbar =
 			FullScreen.mouseoverToggle(true);
 	},
 	
-	setMode: function()
+	setVisible: function()
 	{
-		var toolbar = document.getElementById("PersonalToolbar");
-		if(window.setToolbarVisibility)
-			window.setToolbarVisibility(toolbar, this.visible); // Firefox 4
+		if(this.timeout)
+			clearTimeout(this.timeout);
+		this.timeout = null;
+		
+		var display = this.hoverEnabled ? (this.hovered || 0 != this.popups) : this.visible;
+		
+		if(this.hoverEnabled && !display)
+		{
+			this.timeout = setTimeout(function()
+			{
+				var toolbar = document.getElementById("PersonalToolbar");
+				if(window.setToolbarVisibility)
+					window.setToolbarVisibility(toolbar, display); // Firefox 4
+				else
+					toolbar.collapsed = !display; // pre Firefox 4
+			}, this.hoverDelay);
+		}
 		else
-			toolbar.collapsed = !this.visible; // pre Firefox 4
+		{
+			var toolbar = document.getElementById("PersonalToolbar");
+			if(window.setToolbarVisibility)
+				window.setToolbarVisibility(toolbar, display); // Firefox 4
+			else
+				toolbar.collapsed = !display; // pre Firefox 4
+		}
 	},
 	
 	openOptions: function()
@@ -146,84 +187,95 @@ var hidebookmarksbar =
 		window.open("chrome://hidebookmarksbar/content/options.xul", "hidebooksmarksoptions", "chrome, dialog, centerscreen, alwaysRaised")
 	},
 	
-	hoverModePopup: 0,
 	
-	hoverModeSetup: function()
+	hoverSetup: function()
 	{
-		this.hoverMode = this.prefs.getIntPref("hover");
+		this.popups = 0;
+		
+		this.hoverType = this.prefs.getIntPref("hover.type");
+		this.hoverEnabled = this.prefs.getBoolPref("hover.enabled");
+		
+		/* Firefox 4 only */
+		var buttonView = document.getElementById("BMB_viewBookmarksToolbar");
+		if(buttonView)
+			buttonView.setAttribute("hoverMode", this.hoverEnabled?"true":"false");
 		
 		var buttonHide = document.getElementById("hidebookmarksbarButton");
 		var buttonMenu = document.getElementById("bookmarks-menu-button-container"); // Firefox 4 only
 		var toolbox    = document.getElementById("navigator-toolbox");
-		var menuitem   = document.getElementById("personal-bookmarks");
+		var menuitem   = document.getElementById("PersonalToolbar");
 		
-		buttonHide.removeEventListener("mouseover", this.hoverModeMouseOver, false);
+		/* Remove all handlers first (in case the preference was changed) */
+		buttonHide.removeEventListener("mouseover", this.onMouseOver, false);
 		if(buttonMenu)
-			buttonMenu.removeEventListener("mouseover", this.hoverModeMouseOver, false);
-		toolbox.removeEventListener("mouseover", this.hoverModeMouseOver, false);
-		toolbox.removeEventListener("mouseout", this.hoverModeMouseOut, false);
-		menuitem.removeEventListener("popupshown", this.hoverModePopupshown, false);
-		menuitem.removeEventListener("popuphidden", this.hoverModePopuphidden, false);
+			buttonMenu.removeEventListener("mouseover",   this.onMouseOver,   false);
+		toolbox.removeEventListener(     "mouseover",   this.onMouseOver,   false);
+		toolbox.removeEventListener(     "mouseout",    this.onMouseOut,    false);
+		menuitem.removeEventListener(    "popupshown",  this.onPopupshown,  false);
+		menuitem.removeEventListener(    "popuphidden", this.onPopuphidden, false);
 		
-		toolbox.removeAttribute("bookmarksbarHover");
-		
-		
-		switch(this.hoverMode)
+		/* Now add the appropriate handlers */
+		switch(this.hoverType)
 		{
-			case 1:
-				buttonHide.addEventListener("mouseover", this.hoverModeMouseOver, false);
+			case 0:
 				if(buttonMenu)
-					buttonMenu.addEventListener("mouseover", this.hoverModeMouseOver, false);
-				toolbox.addEventListener("mouseout", this.hoverModeMouseOut, false);
-				menuitem.addEventListener("popupshown", this.hoverModePopupshown, false);
-				menuitem.addEventListener("popuphidden", this.hoverModePopuphidden, false);
+					buttonMenu.addEventListener("mouseover",   this.onMouseOver,   false);
+				buttonHide.addEventListener(  "mouseover",   this.onMouseOver,   false);
+				toolbox.addEventListener(     "mouseout",    this.onMouseOut,    false);
+				menuitem.addEventListener(    "mouseover",   this.onMouseOver,   false);
+				menuitem.addEventListener(    "mouseup",     this.onMouseOver,   false);
+				menuitem.addEventListener(    "popupshown",  this.onPopupshown,  false);
+				menuitem.addEventListener(    "popuphidden", this.onPopuphidden, false);
 				break;
 			
-			case 2:
-				toolbox.addEventListener("mouseover", this.hoverModeMouseOver, false);
-				toolbox.addEventListener("mouseout", this.hoverModeMouseOut, false);
-				menuitem.addEventListener("popupshown", this.hoverModePopupshown, false);
-				menuitem.addEventListener("popuphidden", this.hoverModePopuphidden, false);
+			case 1:
+				toolbox.addEventListener( "mouseover",   this.onMouseOver,   false);
+				toolbox.addEventListener( "mouseout",    this.onMouseOut,    false);
+				menuitem.addEventListener("mouseover",   this.onMouseOver,   false);
+				menuitem.addEventListener("mouseup",     this.onMouseOver,   false);
+				menuitem.addEventListener("popupshown",  this.onPopupshown,  false);
+				menuitem.addEventListener("popuphidden", this.onPopuphidden, false);
 				break;
 		}
 	},
 	
-	hoverModeMouseOver: function(ev)
+	onMouseOver: function(ev)
 	{
-		var toolbox = document.getElementById("navigator-toolbox");
-		toolbox.setAttribute("bookmarksbarHover", "true");
+		hidebookmarksbar.hovered = true;
+		hidebookmarksbar.setVisible();
 	},
 	
-	hoverModeMouseOut: function(ev)
+	onMouseOut: function(ev)
 	{
 		var toolbox = document.getElementById("navigator-toolbox");
-		
-		if(hidebookmarksbar.hoverModePopup > 0) // a menu is opened, don't hide
-			return;
 		
 		if(ev.relatedTarget != null) // if relatedTarget is null, the cursor just left the window
 		{
 			// check if relatedTarget is within navigator-toolbox
 			var el = ev.relatedTarget;
+			
 			while(el)
 			{
-				if(el == toolbox)
+				if(el == toolbox) // it is. Ignore the event
 					return;
 				el = el.parentNode;
 			}
 		}
 		
-		toolbox.removeAttribute("bookmarksbarHover");
+		hidebookmarksbar.hovered = false;
+		hidebookmarksbar.setVisible();
 	},
 	
-	hoverModePopupshown: function(ev)
+	onPopupshown: function(ev)
 	{
-		hidebookmarksbar.hoverModePopup++;
+		hidebookmarksbar.popups++;
+		hidebookmarksbar.setVisible();
 	},
 	
-	hoverModePopuphidden: function(ev)
+	onPopuphidden: function(ev)
 	{
-		hidebookmarksbar.hoverModePopup--;
+		hidebookmarksbar.popups--;
+		hidebookmarksbar.setVisible();
 	}
 };
 
