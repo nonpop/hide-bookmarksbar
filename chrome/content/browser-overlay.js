@@ -133,9 +133,8 @@ var hidebookmarksbar =
 		
 		var isHomePage = gHomeButton.getHomePage().split("|").indexOf(uri) != -1;
 		var isBlank = (uri == "about:blank");
-		var isNewTab = !!gBrowser.selectedTab.getAttribute("newtab"); // TabMixPlus
 		
-		var display = isHomePage || isBlank || isNewTab;
+		var display = isHomePage || isBlank;
 		
 		var pref = hidebookmarksbar.prefs.getBoolPref(display ? "autoShow" : "autoHide");
 		if(pref)
