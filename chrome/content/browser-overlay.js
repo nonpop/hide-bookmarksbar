@@ -8,6 +8,7 @@ var hidebookmarksbar =
 	hoverType: 0,        // which hover type (complete toolbox or only button)
 	hoverDelay: 0,       // delay between mouseout and hiding (only in hover mode)
 	timeout: null,       // timeout for delay
+	lastURI: null,       // for detecting tab changes
 	
 	onLoad: function()
 	{
@@ -45,7 +46,7 @@ var hidebookmarksbar =
 				var modifiers = this.prefs.getCharPref("shortcut.modifiers");
 				if(modifiers.indexOf("accel") != -1)
 				{
-					if(/^Mac/.test(navigator.platform))
+					if(navigator.platform.indexOf("Mac") == 0)
 						label.push(key.getAttribute("cmdlabel"));
 					else
 						label.push(key.getAttribute("ctrllabel"));
@@ -102,6 +103,49 @@ var hidebookmarksbar =
 		this.hoverSetup();
 		
 		this.setVisible();
+		
+		gBrowser.addEventListener("load", this.tabChange, true);
+		gBrowser.tabContainer.addEventListener("TabOpen", this.tabChange, false);
+		gBrowser.tabContainer.addEventListener("TabMove", this.tabChange, false);
+		gBrowser.tabContainer.addEventListener("TabClose", this.tabChange, false);
+		gBrowser.tabContainer.addEventListener("TabSelect", this.tabChange, false);
+		
+		var locationListener =
+		{
+			QueryInterface: function(aIID)
+			{
+				if (aIID.equals(Components.interfaces.nsIWebProgressListener) || aIID.equals(Components.interfaces.nsISupportsWeakReference) || aIID.equals(Components.interfaces.nsISupports)) return this;
+				throw Components.results.NS_NOINTERFACE;
+			},
+			onLocationChange: this.tabChange
+		}
+		gBrowser.addProgressListener(locationListener);
+		this.tabChange();
+	},
+	
+	tabChange: function()
+	{
+		var uri = gBrowser.getBrowserForTab(gBrowser.selectedTab).currentURI.spec;
+		
+		if(uri == hidebookmarksbar.lastURI)
+			return;
+		hidebookmarksbar.lastURI = uri;
+		
+		var isHomePage = gHomeButton.getHomePage().split("|").indexOf(uri) != -1;
+		var isBlank = (uri == "about:blank");
+		var isNewTab = !!gBrowser.selectedTab.getAttribute("newtab"); // TabMixPlus
+		
+		var display = isHomePage || isBlank || isNewTab;
+		
+		var pref = hidebookmarksbar.prefs.getBoolPref(display ? "autoShow" : "autoHide");
+		if(pref)
+		{
+			// If the preference is already as it should be set, we must toggle it twice
+			if(hidebookmarksbar.prefs.getBoolPref("visible") == display)
+				hidebookmarksbar.prefs.setBoolPref("visible", !display);
+			
+			hidebookmarksbar.prefs.setBoolPref("visible", display);
+		}
 	},
 	
 	onUnload: function()

@@ -1,14 +1,16 @@
 function init()
 {
-	if(/^Mac/.test(navigator.platform))
+	document.getElementById("pref_hover_enabled").addEventListener("change", hoverChanged, false);
+	setTimeout(hoverChanged, 1);
+	
+	document.getElementById("pref_autoShow").addEventListener("change", autoShowChanged, false);
+	autoShowChanged();
+	
+	if(navigator.platform.indexOf("Mac") == 0)
 	{
 		var label = document.getElementById("checkbox_ctrl");
 		label.setAttribute("label", label.getAttribute("labelmac"));
 	}
-	
-	document.getElementById("pref_hover_enabled").addEventListener("change", hoverChanged, false);
-	
-	setTimeout(hoverChanged, 0);
 }
 
 function hoverChanged()
@@ -16,6 +18,14 @@ function hoverChanged()
 	var hover = document.getElementById("pref_hover_enabled").value;
 	
 	document.getElementById("typeDeck").selectedIndex = hover?0:1;
+}
+
+function autoShowChanged()
+{
+	var show = document.getElementById("pref_autoShow").value;
+	
+	document.getElementById("newwindow").disabled = show;
+	document.getElementById("startup").disabled = show;
 }
 
 function keyEnabledChanged()
@@ -28,83 +38,44 @@ function keyEnabledChanged()
 	}
 }
 
-
-function syncFromCtrl()
+function getModifier(id)
 {
-	var preference = document.getElementById("pref_key_modifiers");
-	return contains(preference.value, "accel");
-}
-function syncFromShift()
-{
-	var preference = document.getElementById("pref_key_modifiers");
-	return contains(preference.value, "shift");
-}
-function syncFromAlt()
-{
-	var preference = document.getElementById("pref_key_modifiers");
-	return contains(preference.value, "alt");
-}
-
-function syncToCtrl()
-{
-	var preference = document.getElementById("pref_key_modifiers");
-	var checkbox = document.getElementById("checkbox_ctrl");
+	if(id == "checkbox_alt")
+		return "alt";
+	if(id == "checkbox_shift")
+		return "shift";
 	
-	if(checkbox.checked)
-		return add(preference.value, "accel");
-	else
-		return remove(preference.value, "accel");
+	return "accel";
 }
-function syncToShift()
+
+function syncFromPreference(el)
 {
-	var preference = document.getElementById("pref_key_modifiers");
-	var checkbox = document.getElementById("checkbox_shift");
+	var modifier = getModifier(el.id);
 	
-	if(checkbox.checked)
-		return add(preference.value, "shift");
-	else
-		return remove(preference.value, "shift");
-}
-function syncToAlt()
-{
 	var preference = document.getElementById("pref_key_modifiers");
-	var checkbox = document.getElementById("checkbox_alt");
+	return -1 != preference.value.split(",").indexOf(modifier);
+}
+
+function syncToPreference(el)
+{
+	var modifier = getModifier(el.id);
 	
-	if(checkbox.checked)
-		return add(preference.value, "alt");
+	var preference = document.getElementById("pref_key_modifiers");
+	
+	var modifiers = preference.value;
+	if(modifiers == "")
+		modifiers = [];
 	else
-		return remove(preference.value, "alt");
-}
-
-
-function contains(hay, needle)
-{
-	var arr = hay.split(",");
-	for(var i=0;i<arr.length;i++)
-		if(arr[i] == needle)
-			return true;
-	return false;
-}
-
-function remove(hay, needle)
-{
-	var arr1 = hay.split(",");
-	var arr2 = [];
-	for(var i=0;i<arr1.length;i++)
-		if(arr1[i] != needle)
-			arr2.push(arr1[i]);
-	arr2.sort();
-	return arr2.join(",");
-}
-
-function add(hay, needle)
-{
-	remove(hay, needle);
-	var arr = hay.split(",");
-	if(arr[0]=="")
-		arr = [];
-	arr.push(needle);
-	arr.sort();
-	return arr.join(",");
+		modifiers = modifiers.split(",");
+	
+	while(modifiers.indexOf(modifier) != -1)
+		modifiers.splice(modifiers.indexOf(modifier), 1);
+	
+	if(el.checked)
+		modifiers.push(modifier);
+	
+	modifiers.sort()
+	
+	return modifiers.join(",");
 }
 
