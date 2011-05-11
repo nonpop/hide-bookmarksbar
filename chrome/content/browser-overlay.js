@@ -139,11 +139,8 @@ var hidebookmarksbar =
 		var pref = hidebookmarksbar.prefs.getBoolPref(display ? "autoShow" : "autoHide");
 		if(pref)
 		{
-			// If the preference is already as it should be set, we must toggle it twice
-			if(hidebookmarksbar.prefs.getBoolPref("visible") == display)
-				hidebookmarksbar.prefs.setBoolPref("visible", !display);
-			
-			hidebookmarksbar.prefs.setBoolPref("visible", display);
+			hidebookmarksbar.visible = display;
+			hidebookmarksbar.setVisible();
 		}
 	},
 	
