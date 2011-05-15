@@ -1,0 +1,26 @@
+<!ENTITY hidebookmarksbar.windowtitle "Lesezeichenleiste verstecken - Einstellungen">
+<!ENTITY hidebookmarksbar.panetitle "Einstellungen">
+
+<!ENTITY hidebookmarksbar.startup "Beim Starten:">
+<!ENTITY hidebookmarksbar.newwindow "Beim Öffnen eines weiteren Fensters:">
+<!ENTITY hidebookmarksbar.defaultHide "Lesezeichenleiste verstecken">
+<!ENTITY hidebookmarksbar.defaultShow "Lesezeichenleiste anzeigen">
+<!ENTITY hidebookmarksbar.defaultRestore "Letzten Zustand wiederherstellen">
+<!ENTITY hidebookmarksbar.defaultInherit "Vom letzten Fenster übernehmen">
+
+<!ENTITY hidebookmarksbar.shortcut "Tastenkombination aktivieren">
+<!ENTITY hidebookmarksbar.key_ctrl "Strg">
+<!ENTITY hidebookmarksbar.key_cmd "cmd">
+<!ENTITY hidebookmarksbar.key_shift "Umschalt">
+<!ENTITY hidebookmarksbar.key_alt "Alt">
+<!ENTITY hidebookmarksbar.keydescription "Änderungen an der Tastenkombination werden erst in einem neuen Firefox-Fenster übernommen. Sie müssen Firefox eventuell neu starten.">
+
+<!ENTITY hidebookmarksbar.toolbarbuttonCaption "Symbolleiste:">
+<!ENTITY hidebookmarksbar.toolbarbutton "Wählen Sie &quot;Ansicht|Symbolleisten|Anpassen&quot; und ziehen Sie den Button &quot;Lesezeichenleiste&quot; in die Symbolleiste.">
+<!ENTITY hidebookmarksbar.popup "Einstellungen in einem Untermenü anzeigen">
+
+<!ENTITY hidebookmarksbar.hover "Die Leiste automatisch einblenden:">
+<!ENTITY hidebookmarksbar.hovernever "Nie">
+<!ENTITY hidebookmarksbar.hoverbutton "Beim Überfahren des &quot;Lesezeichen&quot;-Buttons mit der Maus">
+<!ENTITY hidebookmarksbar.hovertoolbox "Beim Überfahren einer Symbolleiste mit der Maus">
+

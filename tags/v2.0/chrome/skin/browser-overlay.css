@@ -1,0 +1,13 @@
+#hidebookmarksbarButton
+{
+	list-style-image:url(toolbar32.png);
+}
+toolbar[iconsize="small"] #hidebookmarksbarButton
+{
+	list-style-image:url(toolbar.png);
+}
+#navigator-toolbox[bookmarksbarHover="true"] #PersonalToolbar
+{
+	visibility:visible;
+}
+
