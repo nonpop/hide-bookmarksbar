@@ -16,7 +16,7 @@ version=$(grep "<em:version>" ../trunk/install.rdf | sed \
  -e 's/[[:blank:]]*$//' \
  -e 's!^.*<em:version>!!'  \
  -e 's!</em:version>.*$!!')
-if [ -e ".v$version" ]
+if [ -e "./v$version" ]
 then
 	echo "There is already a tag named v$version!"
 	echo "You should change the version in install.rdf"
