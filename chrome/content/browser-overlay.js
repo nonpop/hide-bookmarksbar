@@ -171,9 +171,12 @@ var hidebookmarksbar =
 			
 			case "hover.enabled":
 			case "hover.type":
-			case "hover.delay":
 				this.hoverSetup();
 				this.setVisible();
+				break;
+			
+			case "hover.delay":
+				this.hoverDelay = this.prefs.getIntPref(data);
 				break;
 		}
 	},
@@ -229,9 +232,8 @@ var hidebookmarksbar =
 	{
 		this.popups = 0;
 		
-		this.hoverType    = this.prefs.getIntPref ("hover.type");
+		this.hoverType = this.prefs.getIntPref("hover.type");
 		this.hoverEnabled = this.prefs.getBoolPref("hover.enabled");
-		this.hoverDelay   = this.prefs.getIntPref ("hover.delay");
 		
 		/* Firefox 4 only */
 		var buttonView = document.getElementById("BMB_viewBookmarksToolbar");
