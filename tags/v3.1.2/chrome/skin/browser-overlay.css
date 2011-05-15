@@ -1,0 +1,14 @@
+#hidebookmarksbarButton
+{
+	list-style-image:url(toolbar32.png);
+}
+toolbar[iconsize="small"] #hidebookmarksbarButton
+{
+	list-style-image:url(toolbar.png);
+}
+#BMB_viewBookmarksToolbar[hoverMode="true"],
+#BMB_viewBookmarksToolbar[hoverMode="true"] + menuseparator
+{
+	display:none;
+}
+
