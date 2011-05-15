@@ -1,0 +1,5 @@
+content  hidebookmarksbar                     chrome/content/
+skin     hidebookmarksbar         classic     chrome/skin/
+locale   hidebookmarksbar         en-US       chrome/locale/en-US/
+locale   hidebookmarksbar         de-DE       chrome/locale/de-DE/
+overlay  chrome://browser/content/browser.xul chrome://hidebookmarksbar/content/browser-overlay.xul
