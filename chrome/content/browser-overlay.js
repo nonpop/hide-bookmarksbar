@@ -133,14 +133,18 @@ var hidebookmarksbar =
 		
 		var isHomePage = gHomeButton.getHomePage().split("|").indexOf(uri) != -1;
 		var isBlank = (uri == "about:blank");
+		var isNewTab = !!gBrowser.selectedTab.getAttribute("newtab"); // TabMixPlus
 		
-		var display = isHomePage || isBlank;
+		var display = isHomePage || isBlank || isNewTab;
 		
 		var pref = hidebookmarksbar.prefs.getBoolPref(display ? "autoShow" : "autoHide");
 		if(pref)
 		{
-			hidebookmarksbar.visible = display;
-			hidebookmarksbar.setVisible();
+			// If the preference is already as it should be set, we must toggle it twice
+			if(hidebookmarksbar.prefs.getBoolPref("visible") == display)
+				hidebookmarksbar.prefs.setBoolPref("visible", !display);
+			
+			hidebookmarksbar.prefs.setBoolPref("visible", display);
 		}
 	},
 	
@@ -171,9 +175,12 @@ var hidebookmarksbar =
 			
 			case "hover.enabled":
 			case "hover.type":
-			case "hover.delay":
 				this.hoverSetup();
 				this.setVisible();
+				break;
+			
+			case "hover.delay":
+				this.hoverDelay = this.prefs.getIntPref(data);
 				break;
 		}
 	},
@@ -229,9 +236,8 @@ var hidebookmarksbar =
 	{
 		this.popups = 0;
 		
-		this.hoverType    = this.prefs.getIntPref ("hover.type");
+		this.hoverType = this.prefs.getIntPref("hover.type");
 		this.hoverEnabled = this.prefs.getBoolPref("hover.enabled");
-		this.hoverDelay   = this.prefs.getIntPref ("hover.delay");
 		
 		/* Firefox 4 only */
 		var buttonView = document.getElementById("BMB_viewBookmarksToolbar");
