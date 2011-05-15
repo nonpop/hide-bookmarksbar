@@ -1,0 +1,41 @@
+#!/bin/bash
+
+cd $(dirname $0)
+export LANG=
+
+lines=$(svn st ../trunk|wc -l)
+if [ "$lines" != "0" ]
+then
+	echo "Uncommited changes in trunk!"
+	echo "You should commit all changes first before creating a new tag"
+	exit 1
+fi
+
+rm -rf update update.zip
+
+version=$(grep "<em:version>" ../trunk/install.rdf | sed \
+ -e 's/^[[:blank:]]*//' \
+ -e 's/[[:blank:]]*$//' \
+ -e 's!<em:version>!!'  \
+ -e 's!</em:version>!!')
+
+echo "Create tag for version $version..."
+
+svn copy ../trunk ./v$version
+
+echo "Export files..."
+
+svn export ./v$version update
+
+echo "Create XPI..."
+
+cd update
+zip ../update.zip -r *
+cd ..
+
+rm -rf update
+
+mv update.zip "xpi/HideBookmarksBar $version.xpi"
+svn add "xpi/HideBookmarksBar $version.xpi"
+echo "Created 'xpi/HideBookmarksBar $version.xpi'"
+
