@@ -1,0 +1,5 @@
+<!ENTITY hidebookmarksbar.keyModifiers "accel,alt">
+<!ENTITY hidebookmarksbar.key "l">
+<!ENTITY hidebookmarksbar.toolbarButtonLabel "Lesezeichenleiste">
+<!ENTITY hidebookmarksbar.toolbarButtonTitle "Lesezeichenleiste ein-/ausblenden">
+
