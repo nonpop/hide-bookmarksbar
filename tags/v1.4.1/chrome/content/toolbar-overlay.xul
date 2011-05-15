@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE window SYSTEM "chrome://hidebookmarksbar/locale/browser-overlay.dtd">
+<?xml-stylesheet href="chrome://hidebookmarksbar/skin/toolbar-overlay.css" type="text/css"?>
+<overlay id="hidebookmarksbarOverlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+</overlay>
