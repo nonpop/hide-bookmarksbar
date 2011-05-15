@@ -11,13 +11,19 @@ then
 	exit 1
 fi
 
-rm -rf update update.zip
-
 version=$(grep "<em:version>" ../trunk/install.rdf | sed \
  -e 's/^[[:blank:]]*//' \
  -e 's/[[:blank:]]*$//' \
- -e 's!<em:version>!!'  \
- -e 's!</em:version>!!')
+ -e 's!^.*<em:version>!!'  \
+ -e 's!</em:version>.*$!!')
+if [ -e ".v$version" ]
+then
+	echo "There is already a tag named v$version!"
+	echo "You should change the version in install.rdf"
+	exit 1
+fi
+
+rm -rf update update.zip
 
 echo "Create tag for version $version..."
 
