@@ -1,0 +1,35 @@
+<!ENTITY hidebookmarksbar.windowtitle "Lesezeichenleiste verstecken - Einstellungen">
+<!ENTITY hidebookmarksbar.panetitle "Einstellungen">
+
+<!ENTITY hidebookmarksbar.toolbarbutton.caption "Symbolleiste:">
+<!ENTITY hidebookmarksbar.toolbarbutton.description "Wählen Sie &quot;Ansicht|Symbolleisten|Anpassen&quot; oder &quot;Firefox|Einstellungen|Symbolleisten anpassen...&quot; und ziehen Sie den Button &quot;Lesezeichenleiste&quot; in die Symbolleiste.">
+
+<!ENTITY hidebookmarksbar.popup "Einstellungen in einem Untermenü anzeigen">
+
+<!ENTITY hidebookmarksbar.hover.enabled "Die Lesezeichenleiste mit der Maus einblenden">
+
+<!ENTITY hidebookmarksbar.hover.type "Die Leiste anzeigen, solange die Maus sich befindet:">
+<!ENTITY hidebookmarksbar.hover.type.button "Über dem &quot;Lesezeichen&quot;-Button">
+<!ENTITY hidebookmarksbar.hover.type.toolbar "Über einer Symbolleiste">
+<!ENTITY hidebookmarksbar.hover.delay "Ausblenden der Lesezeichenleiste verzögern um: ">
+<!ENTITY hidebookmarksbar.hover.delay.ms "Millisekunden">
+
+<!ENTITY hidebookmarksbar.auto.caption "Automatisch umschalten">
+<!ENTITY hidebookmarksbar.auto.show "Leiste einblenden, wenn ein neuer Tab oder die Startseite geöffnet wird">
+<!ENTITY hidebookmarksbar.auto.hide "Leiste ausblenden, wenn eine Adresse aufgerufen wird">
+
+<!ENTITY hidebookmarksbar.startup "Beim Starten:">
+<!ENTITY hidebookmarksbar.newwindow "Beim Öffnen eines weiteren Fensters:">
+
+<!ENTITY hidebookmarksbar.default.hide "Lesezeichenleiste verstecken">
+<!ENTITY hidebookmarksbar.default.show "Lesezeichenleiste anzeigen">
+<!ENTITY hidebookmarksbar.default.restore "Letzten Zustand wiederherstellen">
+<!ENTITY hidebookmarksbar.default.inherit "Vom letzten Fenster übernehmen">
+
+<!ENTITY hidebookmarksbar.key.enable "Tastenkombination aktivieren">
+<!ENTITY hidebookmarksbar.key.ctrl "Strg">
+<!ENTITY hidebookmarksbar.key.cmd "cmd">
+<!ENTITY hidebookmarksbar.key.shift "Umschalt">
+<!ENTITY hidebookmarksbar.key.alt "Alt">
+<!ENTITY hidebookmarksbar.key.description "Änderungen an der Tastenkombination werden erst in einem neuen Firefox-Fenster übernommen. Sie müssen Firefox eventuell neu starten.">
+
