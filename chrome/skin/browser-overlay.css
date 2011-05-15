@@ -6,9 +6,8 @@ toolbar[iconsize="small"] #hidebookmarksbarButton
 {
 	list-style-image:url(toolbar.png);
 }
-#BMB_viewBookmarksToolbar[hoverMode="true"],
-#BMB_viewBookmarksToolbar[hoverMode="true"] + menuseparator
+#navigator-toolbox[bookmarksbarHover="true"] #PersonalToolbar
 {
-	display:none;
+	visibility:visible;
 }
 
