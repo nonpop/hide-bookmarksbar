@@ -3,8 +3,4 @@
 <!ENTITY hidebookmarksbar.toolbarButtonLabel "Bookmarks Toolbar">
 <!ENTITY hidebookmarksbar.toolbarButtonTitle "Toggle Bookmarks Toolbar">
 <!ENTITY hidebookmarksbar.toolbarSettings "Settings">
-<!ENTITY hidebookmarksbar.key_ctrl "Ctrl">
-<!ENTITY hidebookmarksbar.key_cmd "Command">
-<!ENTITY hidebookmarksbar.key_shift "Shift">
-<!ENTITY hidebookmarksbar.key_alt "Alt">
 
