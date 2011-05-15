@@ -1,35 +1,20 @@
 <!ENTITY hidebookmarksbar.windowtitle "Hide BookmarksBar - Settings">
 <!ENTITY hidebookmarksbar.panetitle "Settings">
 
-<!ENTITY hidebookmarksbar.toolbarbutton.caption "Toolbar:">
-<!ENTITY hidebookmarksbar.toolbarbutton.description "Select &quot;View|Toolbars|Customize&quot; or &quot;Firefox|Preferences|Toolbar Layout...&quot; and drag the button &quot;Bookmarks Toolbar&quot; to the toolbar.">
-
-<!ENTITY hidebookmarksbar.popup "Show settings in a popup menu">
-
-<!ENTITY hidebookmarksbar.hover.enabled "Toggle the toolbar with the mouse">
-
-<!ENTITY hidebookmarksbar.hover.type "Show the toolbar while the mouse is over:">
-<!ENTITY hidebookmarksbar.hover.type.button "the &quot;Bookmarks&quot; button">
-<!ENTITY hidebookmarksbar.hover.type.toolbar "a toolbar">
-<!ENTITY hidebookmarksbar.hover.delay "Delay before hiding the toolbar: ">
-<!ENTITY hidebookmarksbar.hover.delay.ms "milliseconds">
-
-<!ENTITY hidebookmarksbar.auto.caption "Toggle the toolbar automatically">
-<!ENTITY hidebookmarksbar.auto.show "Show bookmarks toolbar when a new tab or your homepage is opened">
-<!ENTITY hidebookmarksbar.auto.hide "Hide bookmarks toolbar when a page is opened">
-
 <!ENTITY hidebookmarksbar.startup "At startup:">
 <!ENTITY hidebookmarksbar.newwindow "On opening another window:">
+<!ENTITY hidebookmarksbar.defaultHide "Hide bookmarks toolbar">
+<!ENTITY hidebookmarksbar.defaultShow "Show bookmarks toolbar">
+<!ENTITY hidebookmarksbar.defaultRestore "Restore last state">
+<!ENTITY hidebookmarksbar.defaultInherit "Inherit from last window">
 
-<!ENTITY hidebookmarksbar.default.hide "Hide bookmarks toolbar">
-<!ENTITY hidebookmarksbar.default.show "Show bookmarks toolbar">
-<!ENTITY hidebookmarksbar.default.restore "Restore last state">
-<!ENTITY hidebookmarksbar.default.inherit "Inherit from last window">
+<!ENTITY hidebookmarksbar.shortcut "Enable keybinding">
+<!ENTITY hidebookmarksbar.key_ctrl "CTRL">
+<!ENTITY hidebookmarksbar.key_shift "Shift">
+<!ENTITY hidebookmarksbar.key_alt "Alt">
+<!ENTITY hidebookmarksbar.keydescription "Changes to the keybinding will be applied to new Firefox windows only. You may need to restart Firefox.">
 
-<!ENTITY hidebookmarksbar.key.enable "Enable hotkey">
-<!ENTITY hidebookmarksbar.key.ctrl "Ctrl">
-<!ENTITY hidebookmarksbar.key.cmd "Command">
-<!ENTITY hidebookmarksbar.key.shift "Shift">
-<!ENTITY hidebookmarksbar.key.alt "Alt">
-<!ENTITY hidebookmarksbar.key.description "Changes to the keybinding will be applied to new Firefox windows only. You may need to restart Firefox.">
+<!ENTITY hidebookmarksbar.toolbarbuttonCaption "Toolbar:">
+<!ENTITY hidebookmarksbar.toolbarbutton "Select &quot;View|Toolbars|Customize&quot; and drag the button &quot;Bookmarks Toolbar&quot; to the toolbar.">
+<!ENTITY hidebookmarksbar.popup "Show settings in a popup menu">
 
