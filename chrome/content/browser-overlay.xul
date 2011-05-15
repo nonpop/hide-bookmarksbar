@@ -8,22 +8,17 @@
 		<key id="hidebookmarksbarKeyset"
 		     modifiers="&hidebookmarksbar.keyModifiers;"
 		     key="&hidebookmarksbar.key;" 
-		     oncommand="hidebookmarksbar.toggle();"
-		     ctrllabel="&hidebookmarksbar.key_ctrl;"
-		     cmdlabel="&hidebookmarksbar.key_cmd;"
-		     altlabel="&hidebookmarksbar.key_alt;"
-		     shiftlabel="&hidebookmarksbar.key_shift;" />
+		     oncommand="hidebookmarksbar.toggle();" />
 	</keyset>   
 	
 	<toolbarpalette id="BrowserToolbarPalette">
 		<toolbarbutton id="hidebookmarksbarButton"
-		               class="toolbarbutton-1"
 		               type="menu-button"
 		               label="&hidebookmarksbar.toolbarButtonLabel;"
-		               tooltiptext="&hidebookmarksbar.toolbarButtonTitle;"
+		               title="&hidebookmarksbar.toolbarButtonTitle;"
 		               oncommand="if(event.target==this) hidebookmarksbar.toggle();">
 			<menupopup>
-				<menuitem label="&hidebookmarksbar.toolbarSettings;" oncommand="hidebookmarksbar.openOptions();event.preventDefault()" />
+				<menuitem label="Einstellungen" oncommand="hidebookmarksbar.openOptions();event.preventDefault()" />
 			</menupopup>
 		</toolbarbutton>
 	</toolbarpalette>
