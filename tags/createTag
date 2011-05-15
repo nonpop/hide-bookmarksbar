@@ -22,6 +22,7 @@ version=$(grep "<em:version>" ../trunk/install.rdf | sed \
 echo "Create tag for version $version..."
 
 svn copy ../trunk ./v$version
+svn commit ./v$version -m "Created v$version"
 
 echo "Export files..."
 
@@ -34,8 +35,10 @@ zip ../update.zip -r *
 cd ..
 
 rm -rf update
+mv update.zip "HideBookmarksBar $version.xpi"
 
-mv update.zip "xpi/HideBookmarksBar $version.xpi"
-svn add "xpi/HideBookmarksBar $version.xpi"
-echo "Created 'xpi/HideBookmarksBar $version.xpi'"
+echo "Upload file..."
+python googlecode_upload.py -s "HideBookmarksBar $version" -p hide-bookmarksbar -l Type-Package,OpSys-All,Featured "HideBookmarksBar $version.xpi" && \
+rm "HideBookmarksBar $version.xpi"
+echo "Done."
 
