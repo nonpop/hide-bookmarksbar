@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+  <RDF:Description about="urn:mozilla:install-manifest">
+    <em:id>{311ece6e-ea6a-442f-a02a-a362e561d892}</em:id>
+    <em:name>Hide BookmarksBar</em:name>
+    <em:description>Hides and shows the bookmarks toolbar.</em:description>
+    <em:localized>
+     <Description>
+      <em:locale>de-DE</em:locale>
+      <em:name>Lesezeichenleiste verstecken</em:name>
+      <em:description>Blendet die Lesezeichen-Symbolleiste ein und aus.</em:description>
+     </Description>
+    </em:localized>
+    <em:creator>Felix Kloft</em:creator>
+    <em:version>1.4</em:version>.
+    <em:type>2</em:type>
+    <em:targetApplication>
+      <RDF:Description>
+        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+        <em:maxVersion>3.6.*</em:maxVersion>
+        <em:minVersion>3.0</em:minVersion>
+      </RDF:Description>
+    </em:targetApplication>
+    <em:optionsURL>chrome://hidebookmarksbar/content/options.xul</em:optionsURL>
+    <em:iconURL>chrome://hidebookmarksbar/skin/toolbar32.png</em:iconURL>
+  </RDF:Description>
+</RDF>
