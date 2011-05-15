@@ -1,7 +1,7 @@
 function init()
 {
 	document.getElementById("pref_hover_enabled").addEventListener("change", hoverChanged, false);
-	hoverChanged();
+	setTimeout(hoverChanged, 1);
 	
 	document.getElementById("pref_autoShow").addEventListener("change", autoShowChanged, false);
 	autoShowChanged();
