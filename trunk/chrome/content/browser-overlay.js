@@ -122,27 +122,6 @@ var hidebookmarksbar =
 		this.tabChange();
 	},
 	
-	tabChange: function()
-	{
-		var uri = gBrowser.getBrowserForTab(gBrowser.selectedTab).currentURI.spec;
-		
-		if(uri == hidebookmarksbar.lastURI)
-			return;
-		hidebookmarksbar.lastURI = uri;
-		
-		var isHomePage = gHomeButton.getHomePage().split("|").indexOf(uri) != -1;
-		var isBlank = (uri == "about:blank");
-		
-		var display = isHomePage || isBlank;
-		
-		var pref = hidebookmarksbar.prefs.getBoolPref(display ? "autoShow" : "autoHide");
-		if(pref)
-		{
-			hidebookmarksbar.visible = display;
-			hidebookmarksbar.setVisibility();
-		}
-	},
-	
 	onUnload: function()
 	{
 		this.prefs.removeObserver("", this);
@@ -174,6 +153,27 @@ var hidebookmarksbar =
 				this.hoverSetup();
 				this.setVisibility();
 				break;
+		}
+	},
+	
+	tabChange: function()
+	{
+		var uri = gBrowser.getBrowserForTab(gBrowser.selectedTab).currentURI.spec;
+		
+		if(uri == hidebookmarksbar.lastURI)
+			return;
+		hidebookmarksbar.lastURI = uri;
+		
+		var isHomePage = gHomeButton.getHomePage().split("|").indexOf(uri) != -1;
+		var isBlank = (uri == "about:blank");
+		
+		var display = isHomePage || isBlank;
+		
+		var pref = hidebookmarksbar.prefs.getBoolPref(display ? "autoShow" : "autoHide");
+		if(pref)
+		{
+			hidebookmarksbar.visible = display;
+			hidebookmarksbar.setVisibility();
 		}
 	},
 	
