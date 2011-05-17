@@ -63,7 +63,8 @@ var hidebookmarksbar =
 			window.onViewToolbarCommand = function(aEvent)
 			{
 				hidebookmarksbar.oldOnViewToolbarCommand(aEvent);
-				if(!hidebookmarksbar.hoverEnabled)
+				
+				if(aEvent.originalTarget.getAttribute("toolbarId") == "PersonalToolbar" && !hidebookmarksbar.hoverEnabled)
 				{
 					var visible = aEvent.originalTarget.getAttribute("checked") == "true";
 					
@@ -72,8 +73,6 @@ var hidebookmarksbar =
 						hidebookmarksbar.prefs.setBoolPref("visible", !visible);
 					hidebookmarksbar.prefs.setBoolPref("visible", visible);
 				}
-				
-				hidebookmarksbar.setVisibility();
 			}
 		}
 		
