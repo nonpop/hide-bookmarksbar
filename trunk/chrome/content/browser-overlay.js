@@ -234,43 +234,50 @@ var hidebookmarksbar =
 		if(buttonView)
 			buttonView.setAttribute("hoverMode", this.hoverEnabled?"true":"false");
 		
-		var buttonHide = document.getElementById("hidebookmarksbarButton");
-		var buttonMenu = document.getElementById("bookmarks-menu-button-container"); // Firefox 4 only
-		var toolbox    = document.getElementById("navigator-toolbox");
-		var menuitem   = document.getElementById("PersonalToolbar");
+		
+		var toolbar = document.getElementById("PersonalToolbar");
+		var toolbox = document.getElementById("navigator-toolbox");
+		var hoverItems =
+		[
+			[ /* button only */
+				document.getElementById("hidebookmarksbarButton"),
+				document.getElementById("bookmarks-menu-button-container"), /* Firefox 4 only */
+				document.getElementById("bookmarks-button")
+			],
+			[ /* any toolbar */
+				toolbox
+			]
+		];
 		
 		/* Remove all handlers first (in case the preference was changed) */
-		buttonHide.removeEventListener("mouseover", this.onMouseOver, false);
-		if(buttonMenu)
-			buttonMenu.removeEventListener("mouseover",   this.onMouseOver,   false);
-		toolbox.removeEventListener(     "mouseover",   this.onMouseOver,   false);
-		toolbox.removeEventListener(     "mouseout",    this.onMouseOut,    false);
-		menuitem.removeEventListener(    "popupshown",  this.onPopupshown,  false);
-		menuitem.removeEventListener(    "popuphidden", this.onPopuphidden, false);
+		for(let i=0;i<hoverItems.length;i++)
+		{
+			for(let j=0;j<hoverItems[i].length;j++)
+			{
+				var element = hoverItems[i][j];
+				if(element && element.removeEventListener)
+					element.removeEventListener("mouseover", this.onMouseOver, false);
+			}
+		}
+		
+		toolbox.removeEventListener("mouseout",    this.onMouseOut,    false);
+		toolbar.removeEventListener("popupshown",  this.onPopupshown,  false);
+		toolbar.removeEventListener("popuphidden", this.onPopuphidden, false);
 		
 		/* Now add the appropriate handlers */
-		switch(this.hoverType)
+		if(hoverItems[this.hoverType])
 		{
-			case 0:
-				if(buttonMenu)
-					buttonMenu.addEventListener("mouseover",   this.onMouseOver,   false);
-				buttonHide.addEventListener(  "mouseover",   this.onMouseOver,   false);
-				toolbox.addEventListener(     "mouseout",    this.onMouseOut,    false);
-				menuitem.addEventListener(    "mouseover",   this.onMouseOver,   false);
-				menuitem.addEventListener(    "mouseup",     this.onMouseOver,   false);
-				menuitem.addEventListener(    "popupshown",  this.onPopupshown,  false);
-				menuitem.addEventListener(    "popuphidden", this.onPopuphidden, false);
-				break;
-			
-			case 1:
-				toolbox.addEventListener( "mouseover",   this.onMouseOver,   false);
-				toolbox.addEventListener( "mouseout",    this.onMouseOut,    false);
-				menuitem.addEventListener("mouseover",   this.onMouseOver,   false);
-				menuitem.addEventListener("mouseup",     this.onMouseOver,   false);
-				menuitem.addEventListener("popupshown",  this.onPopupshown,  false);
-				menuitem.addEventListener("popuphidden", this.onPopuphidden, false);
-				break;
+			for(let j=0;j<hoverItems[this.hoverType].length;j++)
+			{
+				var element = hoverItems[this.hoverType][j];
+				if(element && element.addEventListener)
+					element.addEventListener("mouseover", this.onMouseOver, false);
+			}
 		}
+		
+		toolbox.addEventListener("mouseout",    this.onMouseOut,    false);
+		toolbar.addEventListener("popupshown",  this.onPopupshown,  false);
+		toolbar.addEventListener("popuphidden", this.onPopuphidden, false);
 	},
 	
 	onMouseOver: function(ev)
