@@ -74,6 +74,14 @@ var hidebookmarksbar =
 					hidebookmarksbar.prefs.setBoolPref("visible", visible);
 				}
 			}
+			
+			// Firefox 4 only: don't move bookmarks button
+			if(window.BookmarksMenuButton && window.BookmarksMenuButton.updatePosition)
+			{
+				this.oldBMBupdatePosition = window.BookmarksMenuButton.updatePosition;
+				window.BookmarksMenuButton.updatePosition = this.BMBupdatePosition;
+				this.BMBupdatePosition();
+			}
 		}
 		
 		// Show the toolbar for a short moment to load the bookmarks
@@ -153,6 +161,10 @@ var hidebookmarksbar =
 				this.hoverSetup();
 				this.setVisibility();
 				break;
+			
+			case "disableMove":
+				this.BMBupdatePosition();
+				break;
 		}
 	},
 	
@@ -219,6 +231,27 @@ var hidebookmarksbar =
 		window.open("chrome://hidebookmarksbar/content/options.xul", "hidebooksmarksoptions", "chrome, dialog, centerscreen, alwaysRaised")
 	},
 	
+	BMBupdatePosition: function()
+	{
+		hidebookmarksbar.oldBMBupdatePosition.call(window.BookmarksMenuButton);
+		
+		var disableMove = hidebookmarksbar.prefs.getBoolPref("disableMove");
+		
+		if(disableMove)
+		{
+			var container = window.BookmarksMenuButton.buttonContainer;
+			var button = window.BookmarksMenuButton.button;
+			
+			if(button.parentNode != container)
+			{
+				if(button.parentNode)
+					button.parentNode.removeChild(button);
+				container.appendChild(button);
+			}
+			
+			window.BookmarksMenuButton._updateStyle();
+		}
+	},
 	
 	hoverSetup: function()
 	{
