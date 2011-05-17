@@ -233,6 +233,9 @@ var hidebookmarksbar =
 	
 	BMBupdatePosition: function()
 	{
+		if(!window.BookmarksMenuButton)
+			return;
+		
 		hidebookmarksbar.oldBMBupdatePosition.call(window.BookmarksMenuButton);
 		
 		var disableMove = hidebookmarksbar.prefs.getBoolPref("disableMove");
