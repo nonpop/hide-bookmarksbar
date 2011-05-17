@@ -73,14 +73,14 @@ var hidebookmarksbar =
 					hidebookmarksbar.prefs.setBoolPref("visible", visible);
 				}
 				
-				hidebookmarksbar.setVisible();
+				hidebookmarksbar.setVisibility();
 			}
 		}
 		
 		// Show the toolbar for a short moment to load the bookmarks
 		this.visible = true;
 		this.hovered = true;
-		this.setVisible();
+		this.setVisibility();
 		this.hovered = false;
 		
 		if(firstwindow)
@@ -102,7 +102,7 @@ var hidebookmarksbar =
 		
 		this.hoverSetup();
 		
-		this.setVisible();
+		this.setVisibility();
 		
 		gBrowser.addEventListener("load", this.tabChange, true);
 		gBrowser.tabContainer.addEventListener("TabOpen", this.tabChange, false);
@@ -140,7 +140,7 @@ var hidebookmarksbar =
 		if(pref)
 		{
 			hidebookmarksbar.visible = display;
-			hidebookmarksbar.setVisible();
+			hidebookmarksbar.setVisibility();
 		}
 	},
 	
@@ -160,7 +160,7 @@ var hidebookmarksbar =
 		{
 			case "visible":
 				this.visible = this.prefs.getBoolPref(data);
-				this.setVisible();
+				this.setVisibility();
 				break;
 			
 			case "popup":
@@ -173,7 +173,7 @@ var hidebookmarksbar =
 			case "hover.type":
 			case "hover.delay":
 				this.hoverSetup();
-				this.setVisible();
+				this.setVisibility();
 				break;
 		}
 	},
@@ -190,7 +190,7 @@ var hidebookmarksbar =
 			FullScreen.mouseoverToggle(true);
 	},
 	
-	setVisible: function()
+	setVisibility: function()
 	{
 		if(this.timeout)
 			clearTimeout(this.timeout);
@@ -280,7 +280,7 @@ var hidebookmarksbar =
 	onMouseOver: function(ev)
 	{
 		hidebookmarksbar.hovered = true;
-		hidebookmarksbar.setVisible();
+		hidebookmarksbar.setVisibility();
 	},
 	
 	onMouseOut: function(ev)
@@ -301,19 +301,19 @@ var hidebookmarksbar =
 		}
 		
 		hidebookmarksbar.hovered = false;
-		hidebookmarksbar.setVisible();
+		hidebookmarksbar.setVisibility();
 	},
 	
 	onPopupshown: function(ev)
 	{
 		hidebookmarksbar.popups++;
-		hidebookmarksbar.setVisible();
+		hidebookmarksbar.setVisibility();
 	},
 	
 	onPopuphidden: function(ev)
 	{
 		hidebookmarksbar.popups--;
-		hidebookmarksbar.setVisible();
+		hidebookmarksbar.setVisibility();
 	}
 };
 
