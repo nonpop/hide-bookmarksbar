@@ -185,9 +185,6 @@ var hidebookmarksbar =
 			this.prefs.setBoolPref("visible", this.visible);
 		
 		this.prefs.setBoolPref("visible", !this.visible);
-		
-		if(window.fullScreen)
-			FullScreen.mouseoverToggle(true);
 	},
 	
 	setVisibility: function()
@@ -198,25 +195,24 @@ var hidebookmarksbar =
 		
 		var display = this.hoverEnabled ? (this.hovered || 0 != this.popups) : this.visible;
 		
-		if(this.hoverEnabled && !display)
-		{
-			this.timeout = setTimeout(function()
-			{
-				var toolbar = document.getElementById("PersonalToolbar");
-				if(window.setToolbarVisibility)
-					window.setToolbarVisibility(toolbar, display); // Firefox 4
-				else
-					toolbar.collapsed = !display; // pre Firefox 4
-			}, this.hoverDelay);
-		}
-		else
+		function set()
 		{
 			var toolbar = document.getElementById("PersonalToolbar");
 			if(window.setToolbarVisibility)
 				window.setToolbarVisibility(toolbar, display); // Firefox 4
 			else
 				toolbar.collapsed = !display; // pre Firefox 4
+			
+			if(window.fullScreen && display)
+				FullScreen.mouseoverToggle(true);
 		}
+		
+		if(this.hoverEnabled && !display)
+		{
+			this.timeout = setTimeout(set, this.hoverDelay);
+		}
+		else
+			set();
 	},
 	
 	openOptions: function()
