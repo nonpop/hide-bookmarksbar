@@ -3,7 +3,7 @@
 <?xml-stylesheet href="chrome://hidebookmarksbar/skin/browser-overlay.css" type="text/css"?>
 <overlay id="hidebookmarksbarOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<script src="browser-overlay.js" />
+	<script src="browser-overlay.js" type="application/javascript;version=1.7" />
 	<keyset id="mainKeyset">
 		<key id="hidebookmarksbarKeyset"
 		     modifiers="&hidebookmarksbar.keyModifiers;"
