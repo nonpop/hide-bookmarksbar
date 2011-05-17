@@ -7,8 +7,8 @@
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
             xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
             onload="init()"
-            width="710"
-            height="480"
+            width="730"
+            height="510"
            >
 
 	<script src="chrome://hidebookmarksbar/content/options.js"></script>
@@ -16,6 +16,10 @@
 		<preferences>
 			<preference id="pref_popup"
 			            name="extensions.hidebookmarksbar.popup"
+			            type="bool"
+			           />
+			<preference id="pref_disable_move"
+			            name="extensions.hidebookmarksbar.disableMove"
 			            type="bool"
 			           />
 			<preference id="pref_hover_enabled"
@@ -70,6 +74,11 @@
 				<checkbox id="checkbox_toolbarpopup"
 				          preference="pref_popup"
 				          label="&hidebookmarksbar.popup;"
+				         />
+				
+				<checkbox id="checkbox_disable_move"
+				          preference="pref_disable_move"
+				          label="&hidebookmarksbar.toolbarbutton.disableMove;"
 				         />
 			</groupbox>
 			

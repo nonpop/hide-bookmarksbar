@@ -3,6 +3,7 @@
 
 <!ENTITY hidebookmarksbar.toolbarbutton.caption "Toolbar:">
 <!ENTITY hidebookmarksbar.toolbarbutton.description "Select &quot;View|Toolbars|Customize&quot; or &quot;Firefox|Preferences|Toolbar Layout...&quot; and drag the button &quot;Bookmarks Toolbar&quot; to the toolbar.">
+<!ENTITY hidebookmarksbar.toolbarbutton.disableMove "Prevent the bookmarks button from being moved to the bookmarks toolbar (only concerns Firefox 4)">
 
 <!ENTITY hidebookmarksbar.popup "Show settings in a popup menu">
 

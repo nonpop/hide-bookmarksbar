@@ -1,6 +1,8 @@
 pref("extensions.hidebookmarksbar.visible", false);
 pref("extensions.hidebookmarksbar.popup", true);
 
+pref("extensions.hidebookmarksbar.disableMove", true);
+
 pref("extensions.hidebookmarksbar.hover.enabled", false);
 pref("extensions.hidebookmarksbar.hover.type", 0);
 pref("extensions.hidebookmarksbar.hover.delay", 500);
