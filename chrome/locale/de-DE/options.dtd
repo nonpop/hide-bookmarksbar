@@ -3,7 +3,7 @@
 
 <!ENTITY hidebookmarksbar.toolbarbutton.caption "Symbolleiste:">
 <!ENTITY hidebookmarksbar.toolbarbutton.description "Wählen Sie &quot;Ansicht|Symbolleisten|Anpassen&quot; oder &quot;Firefox|Einstellungen|Symbolleisten anpassen...&quot; und ziehen Sie den Button &quot;Lesezeichenleiste&quot; in die Symbolleiste.">
-<!ENTITY hidebookmarksbar.toolbarbutton.disableMove "Verhindern, dass der Lesezeichen-Button auf die Lesezeichenleiste springt (betrifft nur Firefox 4)">
+<!ENTITY hidebookmarksbar.toolbarbutton.disableMove "Verhindern, dass der Lesezeichen-Button auf die Lesezeichenleiste springt">
 
 <!ENTITY hidebookmarksbar.popup "Einstellungen in einem Untermenü anzeigen">
 
