@@ -58,30 +58,30 @@ var hidebookmarksbar =
 				label.push(this.prefs.getCharPref("shortcut.key"));
 				menuitem.setAttribute("acceltext", label.join("+"));
 			}
+		}
+		
+		this.oldOnViewToolbarCommand = window.onViewToolbarCommand
+		window.onViewToolbarCommand = function(aEvent)
+		{
+			hidebookmarksbar.oldOnViewToolbarCommand(aEvent);
 			
-			this.oldOnViewToolbarCommand = window.onViewToolbarCommand
-			window.onViewToolbarCommand = function(aEvent)
+			if(aEvent.originalTarget.getAttribute("toolbarId") == "PersonalToolbar" && !hidebookmarksbar.hoverEnabled)
 			{
-				hidebookmarksbar.oldOnViewToolbarCommand(aEvent);
+				var visible = aEvent.originalTarget.getAttribute("checked") == "true";
 				
-				if(aEvent.originalTarget.getAttribute("toolbarId") == "PersonalToolbar" && !hidebookmarksbar.hoverEnabled)
-				{
-					var visible = aEvent.originalTarget.getAttribute("checked") == "true";
-					
-					// If the preference is already as it should be set, we must toggle it twice
-					if(hidebookmarksbar.prefs.getBoolPref("visible") == visible)
-						hidebookmarksbar.prefs.setBoolPref("visible", !visible);
-					hidebookmarksbar.prefs.setBoolPref("visible", visible);
-				}
+				// If the preference is already as it should be set, we must toggle it twice
+				if(hidebookmarksbar.prefs.getBoolPref("visible") == visible)
+					hidebookmarksbar.prefs.setBoolPref("visible", !visible);
+				hidebookmarksbar.prefs.setBoolPref("visible", visible);
 			}
-			
-			// Firefox 4 only: don't move bookmarks button
-			if(window.BookmarksMenuButton && window.BookmarksMenuButton.updatePosition)
-			{
-				this.oldBMBupdatePosition = window.BookmarksMenuButton.updatePosition;
-				window.BookmarksMenuButton.updatePosition = this.BMBupdatePosition;
-				this.BMBupdatePosition();
-			}
+		}
+		
+		// Firefox 4 only: don't move bookmarks button
+		if(window.BookmarksMenuButton && window.BookmarksMenuButton.updatePosition)
+		{
+			this.oldBMBupdatePosition = window.BookmarksMenuButton.updatePosition;
+			window.BookmarksMenuButton.updatePosition = this.BMBupdatePosition;
+			this.BMBupdatePosition();
 		}
 		
 		// Show the toolbar for a short moment to load the bookmarks
@@ -103,12 +103,9 @@ var hidebookmarksbar =
 		if(firstwindow)
 			this.prefs.setBoolPref("visible", this.visible);
 		
-		var button = document.getElementById("hidebookmarksbarButton");
-		if(button)
-			button.type = this.prefs.getBoolPref("popup") ? "menu-button" : "button";
+		window.addEventListener("aftercustomization", this.updateButtonAttributes, false);
 		
-		this.hoverSetup();
-		
+		this.updateButtonAttributes();
 		this.setVisibility();
 		
 		gBrowser.addEventListener("load", this.tabChange, true);
@@ -150,9 +147,8 @@ var hidebookmarksbar =
 				break;
 			
 			case "popup":
-				var button = document.getElementById("hidebookmarksbarButton");
-				if(button)
-					button.type = this.prefs.getBoolPref(data) ? "menu-button" : "button";
+			case "disableMove":
+				this.updateButtonAttributes();
 				break;
 			
 			case "hover.enabled":
@@ -161,11 +157,22 @@ var hidebookmarksbar =
 				this.hoverSetup();
 				this.setVisibility();
 				break;
-			
-			case "disableMove":
-				this.BMBupdatePosition();
-				break;
 		}
+	},
+	
+	updateButtonAttributes: function()
+	{
+		var button = document.getElementById("hidebookmarksbarButton");
+		if(button)
+			button.type = this.prefs.getBoolPref("popup") ? "menu-button" : "button";
+		
+		/* Firefox 4 only */
+		var buttonView = document.getElementById("BMB_viewBookmarksToolbar");
+		if(buttonView)
+			buttonView.setAttribute("hoverMode", this.hoverEnabled?"true":"false");
+		
+		hidebookmarksbar.BMBupdatePosition();
+		hidebookmarksbar.hoverSetup();
 	},
 	
 	tabChange: function()
@@ -238,21 +245,21 @@ var hidebookmarksbar =
 		
 		hidebookmarksbar.oldBMBupdatePosition.call(window.BookmarksMenuButton);
 		
+		var container = window.BookmarksMenuButton.buttonContainer;
+		var button = window.BookmarksMenuButton.button;
+		
 		var disableMove = hidebookmarksbar.prefs.getBoolPref("disableMove");
 		
-		if(disableMove)
+		if(disableMove && container && button)
 		{
-			var container = window.BookmarksMenuButton.buttonContainer;
-			var button = window.BookmarksMenuButton.button;
-			
 			if(button.parentNode != container)
 			{
 				if(button.parentNode)
 					button.parentNode.removeChild(button);
 				container.appendChild(button);
+				
+				window.BookmarksMenuButton._updateStyle();
 			}
-			
-			window.BookmarksMenuButton._updateStyle();
 		}
 	},
 	
@@ -263,12 +270,6 @@ var hidebookmarksbar =
 		this.hoverType    = this.prefs.getIntPref ("hover.type");
 		this.hoverEnabled = this.prefs.getBoolPref("hover.enabled");
 		this.hoverDelay   = this.prefs.getIntPref ("hover.delay");
-		
-		/* Firefox 4 only */
-		var buttonView = document.getElementById("BMB_viewBookmarksToolbar");
-		if(buttonView)
-			buttonView.setAttribute("hoverMode", this.hoverEnabled?"true":"false");
-		
 		
 		var toolbar = document.getElementById("PersonalToolbar");
 		var toolbox = document.getElementById("navigator-toolbox");
