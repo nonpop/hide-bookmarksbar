@@ -35,7 +35,6 @@ var hidebookmarksbar =
 		key.setAttribute("key",       this.prefs.getCharPref("shortcut.key"));
 		key.setAttribute("disabled", !this.prefs.getBoolPref("shortcut.enabled"));
 		
-		// Firefox 4: Dropdown of Bookmarks-Button
 		if(document.getElementById("BMB_viewBookmarksToolbar"))
 		{
 			if(this.prefs.getBoolPref("shortcut.enabled"))
@@ -216,10 +215,7 @@ var hidebookmarksbar =
 		function set()
 		{
 			var toolbar = document.getElementById("PersonalToolbar");
-			if(window.setToolbarVisibility)
-				window.setToolbarVisibility(toolbar, display); // Firefox 4
-			else
-				toolbar.collapsed = !display; // pre Firefox 4
+			window.setToolbarVisibility(toolbar, display);
 			
 			if(window.fullScreen && display)
 				FullScreen.mouseoverToggle(true);
@@ -277,7 +273,7 @@ var hidebookmarksbar =
 		[
 			[ /* button only */
 				document.getElementById("hidebookmarksbarButton"),
-				document.getElementById("bookmarks-menu-button-container"), /* Firefox 4 only */
+				document.getElementById("bookmarks-menu-button-container"),
 				document.getElementById("bookmarks-button")
 			],
 			[ /* any toolbar */
