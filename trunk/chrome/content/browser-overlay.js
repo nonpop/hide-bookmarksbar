@@ -35,28 +35,10 @@ var hidebookmarksbar =
 		key.setAttribute("key",       this.prefs.getCharPref("shortcut.key"));
 		key.setAttribute("disabled", !this.prefs.getBoolPref("shortcut.enabled"));
 		
-		if(document.getElementById("BMB_viewBookmarksToolbar"))
+		if(document.getElementById("BMB_viewBookmarksToolbar") && this.prefs.getBoolPref("shortcut.enabled"))
 		{
-			if(this.prefs.getBoolPref("shortcut.enabled"))
-			{
-				var menuitem = document.getElementById("BMB_viewBookmarksToolbar");
-				
-				var label = [];
-				var modifiers = this.prefs.getCharPref("shortcut.modifiers");
-				if(modifiers.indexOf("accel") != -1)
-				{
-					if(navigator.platform.indexOf("Mac") == 0)
-						label.push(key.getAttribute("cmdlabel"));
-					else
-						label.push(key.getAttribute("ctrllabel"));
-				}
-				if(modifiers.indexOf("shift") != -1)
-					label.push(key.getAttribute("shiftlabel"));
-				if(modifiers.indexOf("alt") != -1)
-					label.push(key.getAttribute("altlabel"));
-				label.push(this.prefs.getCharPref("shortcut.key"));
-				menuitem.setAttribute("acceltext", label.join("+"));
-			}
+			var menuitem = document.getElementById("BMB_viewBookmarksToolbar");
+			menuitem.setAttribute("key", "hidebookmarksbarKeyset");
 		}
 		
 		this.oldOnViewToolbarCommand = window.onViewToolbarCommand
