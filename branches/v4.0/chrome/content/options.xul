@@ -7,8 +7,6 @@
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
             xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
             onload="init()"
-            width="730"
-            height="510"
            >
 
 	<script src="chrome://hidebookmarksbar/content/options.js"></script>

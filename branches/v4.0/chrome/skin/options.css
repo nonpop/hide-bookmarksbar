@@ -6,4 +6,8 @@ prefpane > .content-box
 {
 	overflow:auto;
 }
+description
+{
+	max-width:50em;
+}
 
