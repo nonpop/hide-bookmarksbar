@@ -34,7 +34,7 @@
 
 <!ENTITY hidebookmarksbar.auto.pane                         "Fonctionnement automatique">
 <!ENTITY hidebookmarksbar.auto.enabled                      "Faire apparaître la barre d'outils à l'ouverture de pages prédéfinies">
-<!ENTITY hidebookmarksbar.auto.homepage                     "">
-<!ENTITY hidebookmarksbar.auto.blank                        "">
-<!ENTITY hidebookmarksbar.auto.other                        "">
+<!ENTITY hidebookmarksbar.auto.homepage                     "Montrer à l'ouverture de votre page d'accueil">
+<!ENTITY hidebookmarksbar.auto.blank                        "Montrer à l'ouverture d'une page vierge (par exemple : un nouvel onglet)">
+<!ENTITY hidebookmarksbar.auto.other                        "Montrer à l'ouverture de ces sites (une adresse par ligne) :">
 
