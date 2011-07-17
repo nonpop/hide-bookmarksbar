@@ -1,36 +1,40 @@
-<!ENTITY hidebookmarksbar.windowtitle "Hide BookmarksBar - Settings">
-<!ENTITY hidebookmarksbar.panetitle "Settings">
+<!ENTITY hidebookmarksbar.windowtitle                       "Hide BookmarksBar - Settings">
 
-<!ENTITY hidebookmarksbar.toolbarbutton.caption "Toolbar:">
-<!ENTITY hidebookmarksbar.toolbarbutton.description "Select &quot;View|Toolbars|Customize&quot; or &quot;Firefox|Preferences|Toolbar Layout...&quot; and drag the button &quot;Bookmarks Toolbar&quot; to the toolbar.">
-<!ENTITY hidebookmarksbar.toolbarbutton.disableMove "Prevent the bookmarks button from being moved to the bookmarks toolbar">
+<!ENTITY hidebookmarksbar.button.pane                       "Button">
+<!ENTITY hidebookmarksbar.button.description.button         "Select &quot;View|Toolbars|Customize&quot; or &quot;Firefox|Preferences|Toolbar Layout...&quot; and drag the button &quot;Bookmarks Toolbar&quot; to the toolbar.">
+<!ENTITY hidebookmarksbar.button.disableMove                "Prevent the bookmarks button from being moved to the bookmarks toolbar">
+<!ENTITY hidebookmarksbar.button.commands.title             "Choose the menu items to appear in the button's dropdown menu">
+<!ENTITY hidebookmarksbar.button.commands.toolbar           "View Bookmarks Toolbar *">
+<!ENTITY hidebookmarksbar.button.commands.sidebar           "View Bookmarks Sidebar">
+<!ENTITY hidebookmarksbar.button.commands.manager           "Show All Bookmarks">
+<!ENTITY hidebookmarksbar.button.commands.settings          "Show this settings dialog">
+<!ENTITY hidebookmarksbar.button.description.toolbarCommand "* Works only if &quot;Manual Switch&quot; is enabled on the next tab">
 
-<!ENTITY hidebookmarksbar.popup "Show settings in a popup menu">
+<!ENTITY hidebookmarksbar.manual.pane                       "Manual switch">
+<!ENTITY hidebookmarksbar.manual.enabled                    "Enable manual switch">
+<!ENTITY hidebookmarksbar.manual.button.enabled             "Click the bookmarks button to toggle the bookmarks toolbar">
+<!ENTITY hidebookmarksbar.manual.button.description         "The button will have two functions: Click the area on the left to toggle the toolbar, click the arrow to open the bookmarks menu (if the next option is enabled)">
+<!ENTITY hidebookmarksbar.manual.button.dropdown            "Enable the bookmarks menu">
+<!ENTITY hidebookmarksbar.manual.shortcut.enabled           "Enable shortcut">
+<!ENTITY hidebookmarksbar.manual.shortcut.ctrl              "Ctrl">
+<!ENTITY hidebookmarksbar.manual.shortcut.cmd               "Command">
+<!ENTITY hidebookmarksbar.manual.shortcut.shift             "Shift">
+<!ENTITY hidebookmarksbar.manual.shortcut.alt               "Alt">
+<!ENTITY hidebookmarksbar.manual.shortcut.description       "Changes to the keybinding will be applied to new Firefox windows only. You may need to restart Firefox.">
 
-<!ENTITY hidebookmarksbar.hover.enabled "Toggle the toolbar with the mouse">
+<!ENTITY hidebookmarksbar.manual.notice                     "If the toolbar cannot be hidden, check settings concerning manual switch.">
 
-<!ENTITY hidebookmarksbar.hover.type "Show the toolbar while the mouse is over:">
-<!ENTITY hidebookmarksbar.hover.type.button "the &quot;Bookmarks&quot; button">
-<!ENTITY hidebookmarksbar.hover.type.toolbar "a toolbar">
-<!ENTITY hidebookmarksbar.hover.delay "Delay before hiding the toolbar: ">
-<!ENTITY hidebookmarksbar.hover.delay.ms "milliseconds">
+<!ENTITY hidebookmarksbar.hover.pane                        "Hover">
+<!ENTITY hidebookmarksbar.hover.enabled                     "Toggle the toolbar with the mouse">
+<!ENTITY hidebookmarksbar.hover.type                        "Show the toolbar while the mouse is over:">
+<!ENTITY hidebookmarksbar.hover.type.button                 "the &quot;Bookmarks&quot; button">
+<!ENTITY hidebookmarksbar.hover.type.toolbar                "a toolbar">
+<!ENTITY hidebookmarksbar.hover.delay                       "Delay before hiding the toolbar: ">
+<!ENTITY hidebookmarksbar.hover.delay.ms                    "milliseconds">
 
-<!ENTITY hidebookmarksbar.auto.caption "Toggle the toolbar automatically">
-<!ENTITY hidebookmarksbar.auto.show "Show bookmarks toolbar when a new tab or your homepage is opened">
-<!ENTITY hidebookmarksbar.auto.hide "Hide bookmarks toolbar when a page is opened">
-
-<!ENTITY hidebookmarksbar.startup "At startup:">
-<!ENTITY hidebookmarksbar.newwindow "On opening another window:">
-
-<!ENTITY hidebookmarksbar.default.hide "Hide bookmarks toolbar">
-<!ENTITY hidebookmarksbar.default.show "Show bookmarks toolbar">
-<!ENTITY hidebookmarksbar.default.restore "Restore last state">
-<!ENTITY hidebookmarksbar.default.inherit "Inherit from last window">
-
-<!ENTITY hidebookmarksbar.key.enable "Enable hotkey">
-<!ENTITY hidebookmarksbar.key.ctrl "Ctrl">
-<!ENTITY hidebookmarksbar.key.cmd "Command">
-<!ENTITY hidebookmarksbar.key.shift "Shift">
-<!ENTITY hidebookmarksbar.key.alt "Alt">
-<!ENTITY hidebookmarksbar.key.description "Changes to the keybinding will be applied to new Firefox windows only. You may need to restart Firefox.">
+<!ENTITY hidebookmarksbar.auto.pane                         "automatic operation">
+<!ENTITY hidebookmarksbar.auto.enabled                      "Show the toolbar when opening defined pages">
+<!ENTITY hidebookmarksbar.auto.homepage                     "Show when your homepage is opened">
+<!ENTITY hidebookmarksbar.auto.blank                        "Show when an empty page is opened (e.g. on new tabs)">
+<!ENTITY hidebookmarksbar.auto.other                        "Show on these sites (one address per line)">
 

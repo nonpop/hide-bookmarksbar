@@ -12,16 +12,154 @@
            >
 
 	<script src="chrome://hidebookmarksbar/content/options.js"></script>
-	<prefpane id="hidebookmarksbar-pane" label="&hidebookmarksbar.panetitle;">
+	
+	<prefpane id="hidebookmarksbar-button" label="&hidebookmarksbar.button.pane;" image="chrome://hidebookmarksbar/skin/toolbar32.png">
 		<preferences>
-			<preference id="pref_popup"
-			            name="extensions.hidebookmarksbar.popup"
+			<preference id="pref_button_disableMove"
+			            name="extensions.hidebookmarksbar.button.disableMove"
 			            type="bool"
 			           />
-			<preference id="pref_disable_move"
-			            name="extensions.hidebookmarksbar.disableMove"
+			<preference id="pref_button_command_toolbar"
+			            name="extensions.hidebookmarksbar.button.commands.toolbar"
 			            type="bool"
 			           />
+			<preference id="pref_button_command_sidebar"
+			            name="extensions.hidebookmarksbar.button.commands.sidebar"
+			            type="bool"
+			           />
+			<preference id="pref_button_command_manager"
+			            name="extensions.hidebookmarksbar.button.commands.manager"
+			            type="bool"
+			           />
+			<preference id="pref_button_command_settings"
+			            name="extensions.hidebookmarksbar.button.commands.settings"
+			            type="bool"
+			           />
+		</preferences>
+		
+		<vbox>
+			<description>&hidebookmarksbar.button.description.button;</description>
+			
+			<checkbox id="checkbox_button_disableMove"
+			          preference="pref_button_disableMove"
+			          label="&hidebookmarksbar.button.disableMove;"
+			         />
+			
+			<groupbox>
+				<caption><label value="&hidebookmarksbar.button.commands.title;" /></caption>
+				
+				<checkbox id="checkbox_button_command_toolbar"
+				          preference="pref_button_command_toolbar"
+				          label="&hidebookmarksbar.button.commands.toolbar;"
+				         />
+				
+				<checkbox id="checkbox_button_command_sidebar"
+				          preference="pref_button_command_sidebar"
+				          label="&hidebookmarksbar.button.commands.sidebar;"
+				         />
+				
+				<checkbox id="checkbox_button_command_manager"
+				          preference="pref_button_command_manager"
+				          label="&hidebookmarksbar.button.commands.manager;"
+				         />
+				
+				<checkbox id="checkbox_button_command_settings"
+				          preference="pref_button_command_settings"
+				          label="&hidebookmarksbar.button.commands.settings;"
+				         />
+			</groupbox>
+			
+			<description>&hidebookmarksbar.button.description.toolbarCommand;</description>
+		</vbox>
+	</prefpane>
+	
+	<prefpane id="hidebookmarksbar-manual" label="&hidebookmarksbar.manual.pane;" image="chrome://hidebookmarksbar/skin/options_manual.png">
+		<preferences>
+			<preference id="pref_manual_enabled"
+			            name="extensions.hidebookmarksbar.manual.enabled"
+			            type="bool"
+			           />
+			<preference id="pref_manual_button_enabled"
+			            name="extensions.hidebookmarksbar.manual.button.enabled"
+			            type="bool"
+			           />
+			<preference id="pref_button_manual_dropdown"
+			            name="extensions.hidebookmarksbar.manual.button.dropdown"
+			            type="bool"
+			           />
+			<preference id="pref_manual_shortcut_enabled"
+			            name="extensions.hidebookmarksbar.manual.shortcut.enabled"
+			            type="bool"
+			           />
+			<preference id="pref_manual_shortcut_modifiers"
+			            name="extensions.hidebookmarksbar.manual.shortcut.modifiers"
+			            type="string"
+			           />
+			<preference id="pref_manual_shortcut_key"
+			            name="extensions.hidebookmarksbar.manual.shortcut.key"
+			            type="string"
+			           />
+		</preferences>
+		
+		<vbox>
+			<checkbox id="checkbox_manual_enabled"
+			          preference="pref_manual_enabled"
+			          label="&hidebookmarksbar.manual.enabled;"
+			         />
+			
+			<groupbox>
+				<caption>
+					<checkbox id="checkbox_manual_button_enabled"
+					          preference="pref_manual_button_enabled"
+					          label="&hidebookmarksbar.manual.button.enabled;"
+					         />
+				</caption>
+				
+				<description>&hidebookmarksbar.manual.button.description;</description>
+				
+				<checkbox id="checkbox_manual_button_dropdown"
+				          preference="pref_button_manual_dropdown"
+				          label="&hidebookmarksbar.manual.button.dropdown;"
+				         />
+			</groupbox>
+			
+			<groupbox>
+				<caption>
+					<checkbox id="checkbox_manual_shortcut_enabled"
+					          preference="pref_manual_shortcut_enabled"
+					          label="&hidebookmarksbar.manual.shortcut.enabled;"
+					         />
+				</caption>
+				
+				<hbox>
+					<checkbox id="checkbox_manual_shortcut_ctrl"
+					          preference="pref_manual_shortcut_modifiers"
+					          label="&hidebookmarksbar.manual.shortcut.ctrl;"
+					          labelmac="&hidebookmarksbar.manual.shortcut.cmd;"
+					          onsyncfrompreference="return syncFromPreference(this)"
+					          onsynctopreference="return syncToPreference(this)"
+					         />
+					<checkbox id="checkbox_manual_shortcut_shift"
+					          preference="pref_manual_shortcut_modifiers"
+					          label="&hidebookmarksbar.manual.shortcut.shift;"
+					          onsyncfrompreference="return syncFromPreference(this)"
+					          onsynctopreference="return syncToPreference(this)"
+					         />
+					<checkbox id="checkbox_manual_shortcut_alt"
+					          preference="pref_manual_shortcut_modifiers"
+					          label="&hidebookmarksbar.manual.shortcut.alt;"
+					          onsyncfrompreference="return syncFromPreference(this)"
+					          onsynctopreference="return syncToPreference(this)"
+					         />
+					<textbox id="textbox_manual_shortcut_key" preference="pref_manual_shortcut_key" width="50" />
+				</hbox>
+				<description>&hidebookmarksbar.manual.shortcut.description;</description>
+			</groupbox>
+		</vbox>
+	</prefpane>
+	
+	<prefpane id="hidebookmarksbar-hover" label="&hidebookmarksbar.hover.pane;" image="chrome://hidebookmarksbar/skin/options_hover.png">
+		<preferences>
 			<preference id="pref_hover_enabled"
 			            name="extensions.hidebookmarksbar.hover.enabled"
 			            type="bool"
@@ -34,152 +172,88 @@
 			            name="extensions.hidebookmarksbar.hover.delay"
 			            type="int"
 			           />
-			<preference id="pref_autoShow"
-			            name="extensions.hidebookmarksbar.autoShow"
-			            type="bool"
-			           />
-			<preference id="pref_autoHide"
-			            name="extensions.hidebookmarksbar.autoHide"
-			            type="bool"
-			           />
-			<preference id="pref_startup"
-			            name="extensions.hidebookmarksbar.startup"
-			            type="int"
-			           />
-			<preference id="pref_newwindow"
-			            name="extensions.hidebookmarksbar.newwindow"
-			            type="int"
-			           />
-			<preference id="pref_key_enabled"
-			            name="extensions.hidebookmarksbar.shortcut.enabled"
-			            type="bool"
-			            onchange="keyEnabledChanged()"
-			           />
-			<preference id="pref_key_modifiers"
-			            name="extensions.hidebookmarksbar.shortcut.modifiers"
-			            type="string"
-			           />
-			<preference id="pref_key"
-			            name="extensions.hidebookmarksbar.shortcut.key"
-			            type="string"
-			           />
 		</preferences>
 		
 		<vbox>
-			<groupbox>
-				<caption><label value="&hidebookmarksbar.toolbarbutton.caption;" /></caption>
-				
-				<description>&hidebookmarksbar.toolbarbutton.description;</description>
-				
-				<checkbox id="checkbox_toolbarpopup"
-				          preference="pref_popup"
-				          label="&hidebookmarksbar.popup;"
-				         />
-				
-				<checkbox id="checkbox_disable_move"
-				          preference="pref_disable_move"
-				          label="&hidebookmarksbar.toolbarbutton.disableMove;"
-				         />
-			</groupbox>
+			<description>&hidebookmarksbar.manual.notice;</description>
 			
 			<checkbox id="checkbox_hover_enabled"
 			          preference="pref_hover_enabled"
 			          label="&hidebookmarksbar.hover.enabled;"
 			         />
 			
-			<deck selectedIndex="1" id="typeDeck">
-				<vbox> <!-- Hover Mode on -->
-					<groupbox>
-						<caption><label control="hover_type" value="&hidebookmarksbar.hover.type;" /></caption>
-						
-						<radiogroup id="hover_type" preference="pref_hover_type" class="radioGroup">
-							<radio label="&hidebookmarksbar.hover.type.button;" value="0" />
-							<radio label="&hidebookmarksbar.hover.type.toolbar;" value="1" />
-						</radiogroup>
-					</groupbox>
-					
-					<hbox align="center">
-						<label control="hover_delay" value="&hidebookmarksbar.hover.delay;" />
-						<textbox id="hover_delay"
-						         preference="pref_hover_delay"
-						         type="number"
-						         increment="100"
-						         size="6"
-						        />
-						<label control="hover_delay" value="&hidebookmarksbar.hover.delay.ms;" />
-					</hbox>
-				</vbox> <!-- /Hover Mode on -->
+			<groupbox>
+				<caption><label control="radiogroup_hover_type" value="&hidebookmarksbar.hover.type;" /></caption>
 				
-				<vbox> <!-- Hover Mode off -->
-					<groupbox>
-						<caption><label value="&hidebookmarksbar.auto.caption;" /></caption>
-						
-						<checkbox id="checkbox_autoShow"
-						          preference="pref_autoShow"
-						          label="&hidebookmarksbar.auto.show;"
-						         />
-						<checkbox id="checkbox_autoHide"
-						          preference="pref_autoHide"
-						          label="&hidebookmarksbar.auto.hide;"
-						         />
-					</groupbox>
-					
-					<hbox>
-						<groupbox flex="1">
-							<caption><label control="startup" value="&hidebookmarksbar.startup;" /></caption>
-							
-							<radiogroup id="startup" preference="pref_startup" class="radioGroup">
-								<radio label="&hidebookmarksbar.default.hide;" value="0" />
-								<radio label="&hidebookmarksbar.default.show;" value="1" />
-								<radio label="&hidebookmarksbar.default.restore;" value="2" />
-							</radiogroup>
-						</groupbox>
-						
-						<groupbox flex="1">
-							<caption><label control="newwindow" value="&hidebookmarksbar.newwindow;" /></caption>
-							
-							<radiogroup id="newwindow" preference="pref_newwindow" class="radioGroup">
-								<radio label="&hidebookmarksbar.default.hide;" value="0" />
-								<radio label="&hidebookmarksbar.default.show;" value="1" />
-								<radio label="&hidebookmarksbar.default.inherit;" value="2" />
-							</radiogroup>
-						</groupbox>
-					</hbox>
-					
-					<groupbox>
-						<caption>
-							<checkbox id="checkbox_enabled"
-							          preference="pref_key_enabled"
-							          label="&hidebookmarksbar.key.enable;"
-							         />
-						</caption>
-						
-						<hbox>
-							<checkbox id="checkbox_ctrl"
-							          preference="pref_key_modifiers"
-							          label="&hidebookmarksbar.key.ctrl;"
-							          labelmac="&hidebookmarksbar.key.cmd;"
-							          onsyncfrompreference="return syncFromPreference(this)"
-							          onsynctopreference="return syncToPreference(this)"
-							         />
-							<checkbox id="checkbox_shift"
-							          preference="pref_key_modifiers"
-							          label="&hidebookmarksbar.key.shift;"
-							          onsyncfrompreference="return syncFromPreference(this)"
-							          onsynctopreference="return syncToPreference(this)"
-							         />
-							<checkbox id="checkbox_alt"
-							          preference="pref_key_modifiers"
-							          label="&hidebookmarksbar.key.alt;"
-							          onsyncfrompreference="return syncFromPreference(this)"
-							          onsynctopreference="return syncToPreference(this)"
-							         />
-							<textbox id="textbox_key" preference="pref_key" width="50" />
-						</hbox>
-						<description>&hidebookmarksbar.key.description;</description>
-					</groupbox>
-				</vbox> <!-- /Hover Mode off -->
-			</deck>
+				<radiogroup id="radiogroup_hover_type" preference="pref_hover_type" class="radioGroup">
+					<radio label="&hidebookmarksbar.hover.type.button;" value="0" />
+					<radio label="&hidebookmarksbar.hover.type.toolbar;" value="1" />
+				</radiogroup>
+			</groupbox>
+			
+			<hbox align="center">
+				<label control="textbox_hover_delay" value="&hidebookmarksbar.hover.delay;" />
+				<textbox id="textbox_hover_delay"
+				         preference="pref_hover_delay"
+				         type="number"
+				         increment="100"
+				         size="6"
+				        />
+				<label control="textbox_hover_delay" value="&hidebookmarksbar.hover.delay.ms;" />
+			</hbox>
+		</vbox>
+	</prefpane>
+	
+	<prefpane id="hidebookmarksbar-auto" label="&hidebookmarksbar.auto.pane;" image="chrome://hidebookmarksbar/skin/options_auto.png">
+		<preferences>
+			<preference id="pref_auto_enabled"
+			            name="extensions.hidebookmarksbar.auto.enabled"
+			            type="bool"
+			           />
+			<preference id="pref_auto_homepage"
+			            name="extensions.hidebookmarksbar.auto.homepage"
+			            type="bool"
+			           />
+			<preference id="pref_auto_blank"
+			            name="extensions.hidebookmarksbar.auto.blank"
+			            type="bool"
+			           />
+			<preference id="pref_auto_other"
+			            name="extensions.hidebookmarksbar.auto.other"
+			            type="string"
+			           />
+		</preferences>
+		
+		<vbox>
+			<description>&hidebookmarksbar.manual.notice;</description>
+			
+			<groupbox>
+				<caption>
+					<checkbox id="checkbox_auto_enabled"
+					          preference="pref_auto_enabled"
+					          label="&hidebookmarksbar.auto.enabled;"
+					         />
+				</caption>
+				
+				<checkbox id="checkbox_auto_homepage"
+				          preference="pref_auto_homepage"
+				          label="&hidebookmarksbar.auto.homepage;"
+				         />
+				
+				<checkbox id="checkbox_auto_blank"
+				          preference="pref_auto_blank"
+				          label="&hidebookmarksbar.auto.blank;"
+				         />
+				
+				<label control="textbox_auto_other" value="&hidebookmarksbar.auto.other;" />
+				<textbox id="textbox_auto_other"
+				         preference="pref_auto_other"
+				         multiline="true"
+				         label="&hidebookmarksbar.auto.other;"
+				         rows="5"
+				         wrap="off"
+				        />
+				</groupbox>
 		</vbox>
 	</prefpane>
 </prefwindow>

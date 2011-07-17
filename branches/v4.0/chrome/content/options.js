@@ -1,48 +1,65 @@
+var disableMatch =
+{
+	"checkbox_button_command_toolbar":  ["pref_button_manual_dropdown", "pref_manual_enabled"],
+	"checkbox_button_command_sidebar":  ["pref_button_manual_dropdown"],
+	"checkbox_button_command_manager":  ["pref_button_manual_dropdown"],
+	"checkbox_button_command_settings": ["pref_button_manual_dropdown"],
+	"checkbox_manual_button_enabled":   ["pref_manual_enabled"],
+	"checkbox_manual_button_dropdown":  ["pref_manual_enabled", "pref_manual_button_enabled"],
+	"checkbox_manual_shortcut_enabled": ["pref_manual_enabled"],
+	"checkbox_manual_shortcut_ctrl":    ["pref_manual_enabled", "pref_manual_shortcut_enabled"],
+	"checkbox_manual_shortcut_shift":   ["pref_manual_enabled", "pref_manual_shortcut_enabled"],
+	"checkbox_manual_shortcut_alt":     ["pref_manual_enabled", "pref_manual_shortcut_enabled"],
+	"textbox_manual_shortcut_key":      ["pref_manual_enabled", "pref_manual_shortcut_enabled"],
+	"radiogroup_hover_type":            ["pref_hover_enabled"],
+	"textbox_hover_delay":              ["pref_hover_enabled"],
+	"checkbox_auto_homepage":           ["pref_auto_enabled"],
+	"checkbox_auto_blank":              ["pref_auto_enabled"],
+	"textbox_auto_other":               ["pref_auto_enabled"]
+}
+var aConsoleService = Components.classes["@mozilla.org/consoleservice;1"].
+     getService(Components.interfaces.nsIConsoleService);
+
+
 function init()
 {
-	document.getElementById("pref_hover_enabled").addEventListener("change", hoverChanged, false);
-	hoverChanged();
-	
-	document.getElementById("pref_autoShow").addEventListener("change", autoShowChanged, false);
-	autoShowChanged();
-	
 	if(navigator.platform.indexOf("Mac") == 0)
 	{
-		var label = document.getElementById("checkbox_ctrl");
+		var label = document.getElementById("checkbox_manual_shortcut_ctrl");
 		label.setAttribute("label", label.getAttribute("labelmac"));
 	}
-}
-
-function hoverChanged()
-{
-	var hover = document.getElementById("pref_hover_enabled").value;
 	
-	document.getElementById("typeDeck").selectedIndex = hover?0:1;
-}
-
-function autoShowChanged()
-{
-	var show = document.getElementById("pref_autoShow").value;
-	
-	document.getElementById("newwindow").disabled = show;
-	document.getElementById("startup").disabled = show;
-}
-
-function keyEnabledChanged()
-{
-	var disable = !document.getElementById("checkbox_enabled").checked;
-	var controls = ["checkbox_ctrl", "checkbox_shift", "checkbox_alt", "textbox_key"];
-	for(var i=0;i<controls.length;i++)
+	var prefs = document.getElementsByTagName("preference");
+	for(var i=0;i<prefs.length;i++)
 	{
-		document.getElementById(controls[i]).disabled = disable;
+		prefs[i].addEventListener("change", prefChanged, false);
+	}
+	prefChanged();
+}
+
+function prefChanged()
+{
+	for(var element in disableMatch)
+	{
+		var enabled = true;
+		var prefs = disableMatch[element];
+		for(var i=0;i<prefs.length;i++)
+		{
+			if(document.getElementById(prefs[i]).value == false)
+			{
+				enabled = false
+				break;
+			}
+		}
+		document.getElementById(element).disabled = !enabled;
 	}
 }
 
 function getModifier(id)
 {
-	if(id == "checkbox_alt")
+	if(id == "checkbox_manual_shortcut_alt")
 		return "alt";
-	if(id == "checkbox_shift")
+	if(id == "checkbox_manual_shortcut_shift")
 		return "shift";
 	
 	return "accel";
@@ -52,7 +69,7 @@ function syncFromPreference(el)
 {
 	var modifier = getModifier(el.id);
 	
-	var preference = document.getElementById("pref_key_modifiers");
+	var preference = document.getElementById("pref_manual_shortcut_modifiers");
 	return -1 != preference.value.split(",").indexOf(modifier);
 }
 
@@ -60,7 +77,7 @@ function syncToPreference(el)
 {
 	var modifier = getModifier(el.id);
 	
-	var preference = document.getElementById("pref_key_modifiers");
+	var preference = document.getElementById("pref_manual_shortcut_modifiers");
 	
 	var modifiers = preference.value;
 	if(modifiers == "")
