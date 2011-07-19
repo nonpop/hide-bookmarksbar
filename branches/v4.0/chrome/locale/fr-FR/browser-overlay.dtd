@@ -1,5 +1,5 @@
 <!ENTITY hidebookmarksbar.shortcut.modifier "accel,alt">
 <!ENTITY hidebookmarksbar.shortcut.key "l">
-<!ENTITY hidebookmarksbar.button.viewSidebar "View Bookmarks Sidebar">
-<!ENTITY hidebookmarksbar.button.viewOptions "Settings">
+<!ENTITY hidebookmarksbar.button.viewSidebar "Afficher la barre latérale des marque-pages">
+<!ENTITY hidebookmarksbar.button.viewOptions "Paramètres">
 
