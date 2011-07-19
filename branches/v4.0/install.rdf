@@ -35,6 +35,6 @@
       </RDF:Description>
     </em:targetApplication>
     <em:optionsURL>chrome://hidebookmarksbar/content/options.xul</em:optionsURL>
-    <em:iconURL>chrome://hidebookmarksbar/skin/toolbar32.png</em:iconURL>
+    <em:iconURL>chrome://hidebookmarksbar/skin/options_toolbar.png</em:iconURL>
   </RDF:Description>
 </RDF>

@@ -3,24 +3,31 @@
 <?xml-stylesheet href="chrome://hidebookmarksbar/skin/browser-overlay.css" type="text/css"?>
 <overlay id="hidebookmarksbarOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<script src="browser-overlay.js" type="application/javascript;version=1.7" />
+	<!--<script src="browser-overlay.js" type="application/javascript;version=1.7" />-->
 	<keyset id="mainKeyset">
 		<key id="hidebookmarksbarKeyset"
-		     modifiers="&hidebookmarksbar.keyModifiers;"
-		     key="&hidebookmarksbar.key;" 
+		     modifiers="&hidebookmarksbar.shortcut.modifier;"
+		     key="&hidebookmarksbar.shortcut.key;" 
 		     oncommand="hidebookmarksbar.toggle();" />
-	</keyset>   
+	</keyset>
 	
-	<toolbarpalette id="BrowserToolbarPalette">
-		<toolbarbutton id="hidebookmarksbarButton"
-		               class="toolbarbutton-1"
-		               type="menu-button"
-		               label="&hidebookmarksbar.toolbarButtonLabel;"
-		               tooltiptext="&hidebookmarksbar.toolbarButtonTitle;"
-		               oncommand="if(event.target==this) hidebookmarksbar.toggle();">
-			<menupopup>
-				<menuitem label="&hidebookmarksbar.toolbarSettings;" oncommand="hidebookmarksbar.openOptions();event.preventDefault()" />
-			</menupopup>
-		</toolbarbutton>
-	</toolbarpalette>
+	<menupopup id="BMB_bookmarksPopup">
+		<menuitem id="BMB_bookmarksSidebar"
+		          insertafter="BMB_viewBookmarksToolbar"
+		          label="&hidebookmarksbar.button.viewSidebar;"
+		          key="viewBookmarksSidebarKb"
+		         >
+			<observes element="viewBookmarksSidebar" attribute="autoCheck" />
+			<observes element="viewBookmarksSidebar" attribute="checked" />
+			<observes element="viewBookmarksSidebar" attribute="oncommand" />
+			<observes element="viewBookmarksSidebar" attribute="type" />
+			<observes element="viewBookmarksSidebar" attribute="group" />
+			<observes element="viewBookmarksSidebar" attribute="sidebarurl" />
+		</menuitem>
+		
+		<menuitem id="BMB_bookmarksSettings"
+		          insertafter="BMB_bookmarksShowAll"
+		          label="&hidebookmarksbar.button.viewOptions;"
+		          oncommand="hidebookmarksbar.openOptions();" />
+	</menupopup>
 </overlay>
