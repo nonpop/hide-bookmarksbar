@@ -1,10 +1,7 @@
 prefpane > .content-box
 {
-	overflow:visible;
-}
-.paneDeckContainer
-{
 	overflow:auto;
+	-moz-box-flex: 1;
 }
 description
 {

@@ -11,7 +11,7 @@
 
 	<script src="chrome://hidebookmarksbar/content/options.js"></script>
 	
-	<prefpane id="hidebookmarksbar-button" label="&hidebookmarksbar.button.pane;" image="chrome://hidebookmarksbar/skin/toolbar.png">
+	<prefpane id="hidebookmarksbar-button" label="&hidebookmarksbar.button.pane;" image="chrome://hidebookmarksbar/skin/options_toolbar.png">
 		<preferences>
 			<preference id="pref_button_disableMove"
 			            name="extensions.hidebookmarksbar.button.disableMove"
