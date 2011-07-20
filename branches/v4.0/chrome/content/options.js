@@ -1,11 +1,6 @@
 var disableMatch =
 {
-	"checkbox_button_command_toolbar":  ["pref_button_manual_dropdown", "pref_manual_enabled"],
-	"checkbox_button_command_sidebar":  ["pref_button_manual_dropdown"],
-	"checkbox_button_command_manager":  ["pref_button_manual_dropdown"],
-	"checkbox_button_command_settings": ["pref_button_manual_dropdown"],
-	"checkbox_manual_button_enabled":   ["pref_manual_enabled"],
-	"checkbox_manual_button_dropdown":  ["pref_manual_enabled", "pref_manual_button_enabled"],
+	"checkbox_button_command_toolbar":  ["pref_manual_enabled"],
 	"checkbox_manual_shortcut_enabled": ["pref_manual_enabled"],
 	"checkbox_manual_shortcut_ctrl":    ["pref_manual_enabled", "pref_manual_shortcut_enabled"],
 	"checkbox_manual_shortcut_shift":   ["pref_manual_enabled", "pref_manual_shortcut_enabled"],

@@ -10,6 +10,18 @@ var hidebookmarksbar =
 		this.prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
 		this.prefs.addObserver("", this, false);
 		
+		
+		// don't move bookmarks button
+		if(window.BookmarksMenuButton && window.BookmarksMenuButton.updatePosition)
+		{
+			this.oldBMBupdatePosition = window.BookmarksMenuButton.updatePosition;
+			window.BookmarksMenuButton.updatePosition = this.BMBupdatePosition;
+		}
+		
+		/* changes to toolbar layout */
+		window.addEventListener("aftercustomization", this.onToolbarChange, false);
+		this.onToolbarChange();
+		
 		this.manual.visible = this.prefs.getBoolPref("manual.visible");
 		this.manual.enabled = this.prefs.getBoolPref("manual.enabled");
 		this.hover.enabled  = this.prefs.getBoolPref("hover.enabled");
@@ -43,17 +55,26 @@ var hidebookmarksbar =
 		
 		switch(data)
 		{
+			case "button.disableMove":
+			case "button.type":
+			case "button.commands.toolbar":
+			case "button.commands.sidebar":
+			case "button.commands.manager":
+			case "button.commands.settings":
+				this.onToolbarChange();
+				break;
+			
 			case "manual.enabled":
-				hidebookmarksbar.manual.enabled = this.prefs.getBoolPref(data);
+				this.manual.enabled = this.prefs.getBoolPref(data);
 				this.setVisibility();
 				break;
 			case "manual.visible":
-				hidebookmarksbar.manual.visible = this.prefs.getBoolPref(data);
+				this.manual.visible = this.prefs.getBoolPref(data);
 				this.setVisibility();
 				break;
 			
 			case "hover.enabled":
-				hidebookmarksbar.auto.enabled = this.prefs.getBoolPref(data);
+				this.auto.enabled = this.prefs.getBoolPref(data);
 				this.setVisibility();
 				break;
 			case "hover.type":
@@ -84,6 +105,68 @@ var hidebookmarksbar =
 		
 		var toolbar = document.getElementById("PersonalToolbar");
 		setToolbarVisibility(toolbar, visible);
+	},
+	
+	onToolbarChange: function()
+	{
+		hidebookmarksbar.BMBupdatePosition();
+		
+		var button = document.getElementById("bookmarks-menu-button");
+		if(button)
+		{
+			button.removeEventListener("command", hidebookmarksbar.onToolbarButtonClick, false);
+			button.   addEventListener("command", hidebookmarksbar.onToolbarButtonClick, false);
+			
+			switch(hidebookmarksbar.prefs.getIntPref("button.type"))
+			{
+				case 0:
+					button.setAttribute("type", "menu");
+					break;
+				
+				case 1:
+					button.removeAttribute("type");
+					break;
+				
+				default:
+					button.setAttribute("type", "menu-button");
+			}
+		}
+	},
+	
+	onToolbarButtonClick: function(ev)
+	{
+		if(ev.target != this)
+			return
+		
+		if(hidebookmarksbar.prefs.getBoolPref("manual.enabled"))
+			hidebookmarksbar.manual.toggle();
+		else
+			toggleSidebar('viewBookmarksSidebar');
+	},
+	
+	BMBupdatePosition: function()
+	{
+		if(!window.BookmarksMenuButton)
+			return;
+		
+		hidebookmarksbar.oldBMBupdatePosition.call(window.BookmarksMenuButton);
+		
+		var container = window.BookmarksMenuButton.buttonContainer;
+		var button = window.BookmarksMenuButton.button;
+		
+		var disableMove = hidebookmarksbar.prefs.getBoolPref("button.disableMove");
+		
+		if(disableMove && container && button)
+		{
+			if(button.parentNode != container)
+			{
+				if(button.parentNode)
+					button.parentNode.removeChild(button);
+				container.appendChild(button);
+				
+				window.BookmarksMenuButton._updateStyle();
+			}
+		}
 	},
 	
 	manual:

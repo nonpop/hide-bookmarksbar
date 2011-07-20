@@ -1,0 +1,9 @@
+#bookmarks-menu-button
+{
+	list-style-image: url("chrome://browser/skin/Toolbar.png");
+}
+toolbar[iconsize="small"] #bookmarks-menu-button
+{
+	list-style-image: url("chrome://browser/skin/Toolbar-small.png");
+}
+

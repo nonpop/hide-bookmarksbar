@@ -17,6 +17,10 @@
 			            name="extensions.hidebookmarksbar.button.disableMove"
 			            type="bool"
 			           />
+			<preference id="pref_button_type"
+			            name="extensions.hidebookmarksbar.button.type"
+			            type="int"
+			           />
 			<preference id="pref_button_command_toolbar"
 			            name="extensions.hidebookmarksbar.button.commands.toolbar"
 			            type="bool"
@@ -42,6 +46,16 @@
 			          preference="pref_button_disableMove"
 			          label="&hidebookmarksbar.button.disableMove;"
 			         />
+			
+			<groupbox>
+				<caption><label control="radiogroup_button_type" value="&hidebookmarksbar.button.type;" /></caption>
+				
+				<radiogroup id="radiogroup_button_type" preference="pref_button_type" class="radioGroup">
+					<radio label="&hidebookmarksbar.button.type.menu;" value="0" />
+					<radio label="&hidebookmarksbar.button.type.button;" value="1" />
+					<radio label="&hidebookmarksbar.button.type.menubutton;" value="2" />
+				</radiogroup>
+			</groupbox>
 			
 			<groupbox>
 				<caption><label value="&hidebookmarksbar.button.commands.title;" /></caption>
@@ -77,14 +91,6 @@
 			            name="extensions.hidebookmarksbar.manual.enabled"
 			            type="bool"
 			           />
-			<preference id="pref_manual_button_enabled"
-			            name="extensions.hidebookmarksbar.manual.button.enabled"
-			            type="bool"
-			           />
-			<preference id="pref_button_manual_dropdown"
-			            name="extensions.hidebookmarksbar.manual.button.dropdown"
-			            type="bool"
-			           />
 			<preference id="pref_manual_shortcut_enabled"
 			            name="extensions.hidebookmarksbar.manual.shortcut.enabled"
 			            type="bool"
@@ -105,21 +111,7 @@
 			          label="&hidebookmarksbar.manual.enabled;"
 			         />
 			
-			<groupbox>
-				<caption>
-					<checkbox id="checkbox_manual_button_enabled"
-					          preference="pref_manual_button_enabled"
-					          label="&hidebookmarksbar.manual.button.enabled;"
-					         />
-				</caption>
-				
-				<description>&hidebookmarksbar.manual.button.description;</description>
-				
-				<checkbox id="checkbox_manual_button_dropdown"
-				          preference="pref_button_manual_dropdown"
-				          label="&hidebookmarksbar.manual.button.dropdown;"
-				         />
-			</groupbox>
+			<description>&hidebookmarksbar.manual.description;</description>
 			
 			<groupbox>
 				<caption>
