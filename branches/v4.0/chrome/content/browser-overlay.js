@@ -1,27 +1,7 @@
 var hidebookmarksbar = 
 {
-	prefs: null,         // pref system
-	visible: false,      // if the toolbar should be visible according to the preferences (manual mode)
-	popups: 0,           // if there are any popups (menus) open (which should prevent the toolbar from hiding)
-	hovered: false,      // if the toolbar should be visible because of the mouse position (hover mode)
-	hoverEnabled: false, // hover mode enabled?
-	hoverType: 0,        // which hover type (complete toolbox or only button)
-	hoverDelay: 0,       // delay between mouseout and hiding (only in hover mode)
-	timeout: null,       // timeout for delay
-	lastURI: null,       // for detecting tab changes
-	
 	onLoad: function()
 	{
-		var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator);
-		var enumerator = wm.getEnumerator("navigator:browser");
-		for(var i=0;enumerator.hasMoreElements();i++)
-		{
-			enumerator.getNext();
-			if(i>=2)
-				break;
-		}
-		var firstwindow = (i==1);
-		
 		document.getElementById("PersonalToolbar").setAttribute("fullscreentoolbar", "true");
 		
 		this.prefs = Components.classes["@mozilla.org/preferences-service;1"]
@@ -30,82 +10,23 @@ var hidebookmarksbar =
 		this.prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
 		this.prefs.addObserver("", this, false);
 		
-		var key = document.getElementById("hidebookmarksbarKeyset");
-		key.setAttribute("modifiers", this.prefs.getCharPref("shortcut.modifiers"));
-		key.setAttribute("key",       this.prefs.getCharPref("shortcut.key"));
-		key.setAttribute("disabled", !this.prefs.getBoolPref("shortcut.enabled"));
+		this.manual.visible = this.prefs.getBoolPref("manual.visible");
+		this.manual.enabled = this.prefs.getBoolPref("manual.enabled");
+		this.hover.enabled  = this.prefs.getBoolPref("hover.enabled");
+		this.auto.enabled   = this.prefs.getBoolPref("auto.enabled");
 		
-		if(document.getElementById("BMB_viewBookmarksToolbar") && this.prefs.getBoolPref("shortcut.enabled"))
-		{
-			var menuitem = document.getElementById("BMB_viewBookmarksToolbar");
-			menuitem.setAttribute("key", "hidebookmarksbarKeyset");
-		}
-		
-		this.oldOnViewToolbarCommand = window.onViewToolbarCommand
-		window.onViewToolbarCommand = function(aEvent)
-		{
-			hidebookmarksbar.oldOnViewToolbarCommand(aEvent);
-			
-			if(aEvent.originalTarget.getAttribute("toolbarId") == "PersonalToolbar" && !hidebookmarksbar.hoverEnabled)
-			{
-				var visible = aEvent.originalTarget.getAttribute("checked") == "true";
-				
-				// If the preference is already as it should be set, we must toggle it twice
-				if(hidebookmarksbar.prefs.getBoolPref("visible") == visible)
-					hidebookmarksbar.prefs.setBoolPref("visible", !visible);
-				hidebookmarksbar.prefs.setBoolPref("visible", visible);
-			}
-		}
-		
-		// Firefox 4 only: don't move bookmarks button
-		if(window.BookmarksMenuButton && window.BookmarksMenuButton.updatePosition)
-		{
-			this.oldBMBupdatePosition = window.BookmarksMenuButton.updatePosition;
-			window.BookmarksMenuButton.updatePosition = this.BMBupdatePosition;
-			this.BMBupdatePosition();
-		}
+		hidebookmarksbar.manual.onLoad();
+		hidebookmarksbar.auto.onLoad();
+		hidebookmarksbar.hover.onLoad();
 		
 		// Show the toolbar for a short moment to load the bookmarks
-		this.visible = true;
-		this.hovered = true;
+		this.setVisibility(true);
 		this.setVisibility();
-		this.hovered = false;
-		
-		if(firstwindow)
-			var startup = this.prefs.getIntPref("startup");
-		else
-			var startup = this.prefs.getIntPref("newwindow");
-		
-		if(startup < 2)
-			this.visible = !!startup;
-		else
-			this.visible = this.prefs.getBoolPref("visible");
-		
-		if(firstwindow)
-			this.prefs.setBoolPref("visible", this.visible);
-		
-		window.addEventListener("aftercustomization", this.updateButtonAttributes, false);
-		
-		this.updateButtonAttributes();
-		this.setVisibility();
-		
-		gBrowser.addEventListener("load", this.tabChange, true);
-		gBrowser.tabContainer.addEventListener("TabOpen", this.tabChange, false);
-		gBrowser.tabContainer.addEventListener("TabMove", this.tabChange, false);
-		gBrowser.tabContainer.addEventListener("TabClose", this.tabChange, false);
-		gBrowser.tabContainer.addEventListener("TabSelect", this.tabChange, false);
-		
-		var locationListener =
-		{
-			QueryInterface: function(aIID)
-			{
-				if (aIID.equals(Components.interfaces.nsIWebProgressListener) || aIID.equals(Components.interfaces.nsISupportsWeakReference) || aIID.equals(Components.interfaces.nsISupports)) return this;
-				throw Components.results.NS_NOINTERFACE;
-			},
-			onLocationChange: this.tabChange
-		}
-		gBrowser.addProgressListener(locationListener);
-		this.tabChange();
+	},
+	
+	openOptions: function()
+	{
+		window.open("chrome://hidebookmarksbar/content/options.xul", "hidebooksmarksoptions", "alwaysRaised, centerscreen, chrome, dialog, titlebar, toolbar")
 	},
 	
 	onUnload: function()
@@ -122,215 +43,246 @@ var hidebookmarksbar =
 		
 		switch(data)
 		{
-			case "visible":
-				this.visible = this.prefs.getBoolPref(data);
+			case "manual.enabled":
+				hidebookmarksbar.manual.enabled = this.prefs.getBoolPref(data);
 				this.setVisibility();
 				break;
-			
-			case "popup":
-			case "disableMove":
-				this.updateButtonAttributes();
+			case "manual.visible":
+				hidebookmarksbar.manual.visible = this.prefs.getBoolPref(data);
+				this.setVisibility();
 				break;
 			
 			case "hover.enabled":
-			case "hover.type":
-			case "hover.delay":
-				this.hoverSetup();
+				hidebookmarksbar.auto.enabled = this.prefs.getBoolPref(data);
 				this.setVisibility();
+				break;
+			case "hover.type":
+				this.hover.setEventListener();
+				break;
+			
+			case "auto.enabled":
+				this.auto.enabled = this.prefs.getBoolPref(data);
+				this.setVisibility();
+				break;
+			case "auto.homepage":
+			case "auto.blank":
+			case "auto.other":
+				this.auto.lastURI = -1;
+				this.auto.locationChange();
 				break;
 		}
 	},
 	
-	updateButtonAttributes: function()
+	setVisibility: function(forceVisible)
 	{
-		var button = document.getElementById("hidebookmarksbarButton");
-		if(button)
-			button.type = this.prefs.getBoolPref("popup") ? "menu-button" : "button";
-		
-		/* Firefox 4 only */
-		var buttonView = document.getElementById("BMB_viewBookmarksToolbar");
-		if(buttonView)
-			buttonView.setAttribute("hoverMode", this.hoverEnabled?"true":"false");
-		
-		hidebookmarksbar.BMBupdatePosition();
-		hidebookmarksbar.hoverSetup();
-	},
-	
-	tabChange: function()
-	{
-		var uri = gBrowser.getBrowserForTab(gBrowser.selectedTab).currentURI.spec;
-		
-		if(uri == hidebookmarksbar.lastURI)
-			return;
-		hidebookmarksbar.lastURI = uri;
-		
-		var isHomePage = gHomeButton.getHomePage().split("|").indexOf(uri) != -1;
-		var isBlank = (uri == "about:blank");
-		
-		var display = isHomePage || isBlank;
-		
-		var pref = hidebookmarksbar.prefs.getBoolPref(display ? "autoShow" : "autoHide");
-		if(pref)
-		{
-			hidebookmarksbar.visible = display;
-			hidebookmarksbar.setVisibility();
-		}
-	},
-	
-	toggle: function()
-	{
-		// If the preference is already as it should be set, we must toggle it twice
-		if(this.prefs.getBoolPref("visible") != this.visible)
-			this.prefs.setBoolPref("visible", this.visible);
-		
-		this.prefs.setBoolPref("visible", !this.visible);
-	},
-	
-	setVisibility: function()
-	{
-		if(this.timeout)
-			clearTimeout(this.timeout);
-		this.timeout = null;
-		
-		var display = this.hoverEnabled ? (this.hovered || 0 != this.popups) : this.visible;
-		
-		function set()
-		{
-			var toolbar = document.getElementById("PersonalToolbar");
-			window.setToolbarVisibility(toolbar, display);
-			
-			if(window.fullScreen && display)
-				FullScreen.mouseoverToggle(true);
-		}
-		
-		if(this.hoverEnabled && !display)
-		{
-			this.timeout = setTimeout(set, this.hoverDelay);
-		}
-		else
-			set();
-	},
-	
-	openOptions: function()
-	{
-		window.open("chrome://hidebookmarksbar/content/options.xul", "hidebooksmarksoptions", "chrome, dialog, centerscreen, alwaysRaised")
-	},
-	
-	BMBupdatePosition: function()
-	{
-		if(!window.BookmarksMenuButton)
-			return;
-		
-		hidebookmarksbar.oldBMBupdatePosition.call(window.BookmarksMenuButton);
-		
-		var container = window.BookmarksMenuButton.buttonContainer;
-		var button = window.BookmarksMenuButton.button;
-		
-		var disableMove = hidebookmarksbar.prefs.getBoolPref("disableMove");
-		
-		if(disableMove && container && button)
-		{
-			if(button.parentNode != container)
-			{
-				if(button.parentNode)
-					button.parentNode.removeChild(button);
-				container.appendChild(button);
-				
-				window.BookmarksMenuButton._updateStyle();
-			}
-		}
-	},
-	
-	hoverSetup: function()
-	{
-		this.popups = 0;
-		
-		this.hoverType    = this.prefs.getIntPref ("hover.type");
-		this.hoverEnabled = this.prefs.getBoolPref("hover.enabled");
-		this.hoverDelay   = this.prefs.getIntPref ("hover.delay");
+		var visible =
+		(  forceVisible
+		|| (hidebookmarksbar.manual.enabled && hidebookmarksbar.manual.visible)
+		|| (hidebookmarksbar.hover.enabled  && hidebookmarksbar.hover.visible)
+		|| (hidebookmarksbar.auto.enabled   && hidebookmarksbar.auto.visible)
+		)
 		
 		var toolbar = document.getElementById("PersonalToolbar");
-		var toolbox = document.getElementById("navigator-toolbox");
-		var hoverItems =
-		[
-			[ /* button only */
-				document.getElementById("hidebookmarksbarButton"),
-				document.getElementById("bookmarks-menu-button-container"),
-				document.getElementById("bookmarks-button")
-			],
-			[ /* any toolbar */
-				toolbox
-			]
-		];
-		
-		/* Remove all handlers first (in case the preference was changed) */
-		for(let i=0;i<hoverItems.length;i++)
-		{
-			for(let j=0;j<hoverItems[i].length;j++)
-			{
-				var element = hoverItems[i][j];
-				if(element && element.removeEventListener)
-					element.removeEventListener("mouseover", this.onMouseOver, false);
-			}
-		}
-		
-		toolbox.removeEventListener("mouseout",    this.onMouseOut,    false);
-		toolbar.removeEventListener("popupshown",  this.onPopupshown,  false);
-		toolbar.removeEventListener("popuphidden", this.onPopuphidden, false);
-		
-		/* Now add the appropriate handlers */
-		if(hoverItems[this.hoverType])
-		{
-			for(let j=0;j<hoverItems[this.hoverType].length;j++)
-			{
-				var element = hoverItems[this.hoverType][j];
-				if(element && element.addEventListener)
-					element.addEventListener("mouseover", this.onMouseOver, false);
-			}
-		}
-		
-		toolbox.addEventListener("mouseout",    this.onMouseOut,    false);
-		toolbar.addEventListener("popupshown",  this.onPopupshown,  false);
-		toolbar.addEventListener("popuphidden", this.onPopuphidden, false);
+		setToolbarVisibility(toolbar, visible);
 	},
 	
-	onMouseOver: function(ev)
+	manual:
 	{
-		hidebookmarksbar.hovered = true;
-		hidebookmarksbar.setVisibility();
+		onLoad: function()
+		{
+			var key = document.getElementById("hidebookmarksbarKey");
+			key.setAttribute("modifiers", hidebookmarksbar.prefs.getCharPref("manual.shortcut.modifiers"));
+			key.setAttribute("key",       hidebookmarksbar.prefs.getCharPref("manual.shortcut.key"));
+			key.setAttribute("disabled", !hidebookmarksbar.prefs.getBoolPref("manual.shortcut.enabled"));
+		
+			hidebookmarksbar.manual.oldOnViewToolbarCommand = window.onViewToolbarCommand
+			window.onViewToolbarCommand = function(aEvent)
+			{
+				if(aEvent.originalTarget.getAttribute("toolbarId") == "PersonalToolbar")
+					hidebookmarksbar.manual.toggle();
+				else
+					hidebookmarksbar.manual.oldOnViewToolbarCommand(aEvent);
+			}
+		},
+		
+		toggle: function()
+		{
+			var visible = hidebookmarksbar.prefs.getBoolPref("manual.visible");
+			hidebookmarksbar.prefs.setBoolPref("manual.visible", !visible);
+		}
 	},
 	
-	onMouseOut: function(ev)
+	hover:
 	{
-		var toolbox = document.getElementById("navigator-toolbox");
+		popups: 0,
+		timeout: null,
 		
-		if(ev.relatedTarget != null) // if relatedTarget is null, the cursor just left the window
+		onLoad: function()
 		{
-			// check if relatedTarget is within navigator-toolbox
-			var el = ev.relatedTarget;
+			var toolbar = document.getElementById("PersonalToolbar");
+			var toolbox = document.getElementById("navigator-toolbox");
 			
-			while(el)
+			toolbox.addEventListener("mouseout",    this.onMouseOut,    false);
+			toolbar.addEventListener("popupshown",  this.onPopupshown,  false);
+			toolbar.addEventListener("popuphidden", this.onPopuphidden, false);
+			
+			this.setEventListener();
+		},
+		
+		setEventListener: function()
+		{
+			var hoverType    = hidebookmarksbar.prefs.getIntPref ("hover.type");
+			
+			var toolbox = document.getElementById("navigator-toolbox");
+			var hoverItems =
+			[
+				[ /* button only */
+					document.getElementById("bookmarks-menu-button-container"),
+					document.getElementById("bookmarks-button")
+				],
+				[ /* any toolbar */
+					toolbox
+				]
+			];
+			
+			/* Remove all handlers first (in case the preference was changed) */
+			for(let i=0;i<hoverItems.length;i++)
 			{
-				if(el == toolbox) // it is. Ignore the event
-					return;
-				el = el.parentNode;
+				for(let j=0;j<hoverItems[i].length;j++)
+				{
+					var element = hoverItems[i][j];
+					if(element && element.removeEventListener)
+						element.removeEventListener("mouseover", this.onMouseOver, false);
+				}
+			}
+			
+			/* Now add the appropriate handlers */
+			if(hoverItems[hoverType])
+			{
+				for(let j=0;j<hoverItems[hoverType].length;j++)
+				{
+					var element = hoverItems[hoverType][j];
+					if(element && element.addEventListener)
+						element.addEventListener("mouseover", this.onMouseOver, false);
+				}
+			}
+		},
+		
+		onMouseOver: function(ev)
+		{
+			hidebookmarksbar.hover.hovered = true;
+			hidebookmarksbar.hover.setVisibility();
+		},
+		
+		onMouseOut: function(ev)
+		{
+			var toolbox = document.getElementById("navigator-toolbox");
+			
+			if(ev.relatedTarget != null) // if relatedTarget is null, the cursor just left the window
+			{
+				// check if relatedTarget is within navigator-toolbox
+				var el = ev.relatedTarget;
+				
+				while(el)
+				{
+					if(el == toolbox) // it is. Ignore the event
+						return;
+					el = el.parentNode;
+				}
+			}
+			
+			hidebookmarksbar.hover.hovered = false;
+			hidebookmarksbar.hover.setVisibility();
+		},
+		
+		onPopupshown: function(ev)
+		{
+			hidebookmarksbar.hover.popups++;
+			hidebookmarksbar.hover.setVisibility();
+		},
+		
+		onPopuphidden: function(ev)
+		{
+			hidebookmarksbar.hover.popups--;
+			hidebookmarksbar.hover.setVisibility();
+		},
+		
+		setVisibility: function()
+		{
+			if(this.timeout)
+			{
+				clearTimeout(this.timeout);
+				this.timeout = null;
+			}
+			
+			var visible = (this.popups > 0 || this.hovered)
+			if(visible)
+			{
+				this.visible = true;
+				hidebookmarksbar.setVisibility();
+			}
+			else
+			{
+				this.timeout = setTimeout(function()
+				{
+					hidebookmarksbar.hover.visible = false;
+					hidebookmarksbar.setVisibility();
+				}, hidebookmarksbar.prefs.getIntPref("hover.delay"));
 			}
 		}
+	},
+	
+	auto:
+	{
+		lastURI: -1,
+		onLoad: function()
+		{
+			gBrowser.addEventListener("load", this.locationChange, true);
+			gBrowser.tabContainer.addEventListener("TabOpen", this.locationChange, false);
+			gBrowser.tabContainer.addEventListener("TabMove", this.locationChange, false);
+			gBrowser.tabContainer.addEventListener("TabClose", this.locationChange, false);
+			gBrowser.tabContainer.addEventListener("TabSelect", this.locationChange, false);
 		
-		hidebookmarksbar.hovered = false;
-		hidebookmarksbar.setVisibility();
-	},
-	
-	onPopupshown: function(ev)
-	{
-		hidebookmarksbar.popups++;
-		hidebookmarksbar.setVisibility();
-	},
-	
-	onPopuphidden: function(ev)
-	{
-		hidebookmarksbar.popups--;
-		hidebookmarksbar.setVisibility();
+			var locationListener =
+			{
+				QueryInterface: function(aIID)
+				{
+					if (aIID.equals(Components.interfaces.nsIWebProgressListener) || aIID.equals(Components.interfaces.nsISupportsWeakReference) || aIID.equals(Components.interfaces.nsISupports)) return this;
+					throw Components.results.NS_NOINTERFACE;
+				},
+				onLocationChange: this.locationChange
+			}
+			gBrowser.addProgressListener(locationListener);
+			this.locationChange();
+		},
+		
+		locationChange: function()
+		{
+			var uri = gBrowser.getBrowserForTab(gBrowser.selectedTab).currentURI.spec;
+			
+			if(uri == hidebookmarksbar.auto.lastURI)
+				return;
+			
+			hidebookmarksbar.auto.lastURI = uri;
+			
+			var other = hidebookmarksbar.prefs.getCharPref("auto.other");
+			if(other == "")
+				other = [];
+			else
+				other = other.split("\n");
+			
+			var isOther    = -1 != other.indexOf(uri);
+			var isHomePage = -1 != gHomeButton.getHomePage().split("|").indexOf(uri);
+			var isBlank    = (uri == "about:blank");
+			
+			hidebookmarksbar.auto.visible =
+			(isOther
+			|| (hidebookmarksbar.prefs.getBoolPref("auto.homepage") && isHomePage)
+			|| (hidebookmarksbar.prefs.getBoolPref("auto.blank")    && isBlank)
+			)
+			
+			hidebookmarksbar.setVisibility();
+		}
 	}
 };
 

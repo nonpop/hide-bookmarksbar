@@ -3,15 +3,18 @@
 <?xml-stylesheet href="chrome://hidebookmarksbar/skin/browser-overlay.css" type="text/css"?>
 <overlay id="hidebookmarksbarOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<!--<script src="browser-overlay.js" type="application/javascript;version=1.7" />-->
+	<script src="browser-overlay.js" type="application/javascript;version=1.7" />
 	<keyset id="mainKeyset">
-		<key id="hidebookmarksbarKeyset"
+		<key id="hidebookmarksbarKey"
 		     modifiers="&hidebookmarksbar.shortcut.modifier;"
 		     key="&hidebookmarksbar.shortcut.key;" 
-		     oncommand="hidebookmarksbar.toggle();" />
+		     oncommand="hidebookmarksbar.manual.toggle();" />
 	</keyset>
 	
 	<menupopup id="BMB_bookmarksPopup">
+		<menuitem id="BMB_viewBookmarksToolbar"
+		          key="hidebookmarksbarKey"
+		         />
 		<menuitem id="BMB_bookmarksSidebar"
 		          insertafter="BMB_viewBookmarksToolbar"
 		          label="&hidebookmarksbar.button.viewSidebar;"
