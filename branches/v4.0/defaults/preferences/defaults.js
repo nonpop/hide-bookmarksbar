@@ -5,11 +5,11 @@ pref("extensions.hidebookmarksbar.button.commands.sidebar", true);
 pref("extensions.hidebookmarksbar.button.commands.manager", true);
 pref("extensions.hidebookmarksbar.button.commands.settings", true);
 
+pref("extensions.hidebookmarksbar.manual.button.dropdown", true);
+pref("extensions.hidebookmarksbar.manual.button.enabled", true);
+
 pref("extensions.hidebookmarksbar.manual.visible", false);
 pref("extensions.hidebookmarksbar.manual.enabled", true);
-
-pref("extensions.hidebookmarksbar.manual.button.enabled", true);
-pref("extensions.hidebookmarksbar.manual.button.dropdown", true);
 
 pref("extensions.hidebookmarksbar.manual.shortcut.enabled", true);
 pref("extensions.hidebookmarksbar.manual.shortcut.modifiers", "accel,alt");
