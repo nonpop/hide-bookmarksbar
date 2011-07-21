@@ -4,8 +4,8 @@
 <!ENTITY hidebookmarksbar.button.description.button          "Choisissez &quot;Affichage|Barres d'outils|Personnaliser&quot; ou &quot;Firefox|Options|Personnaliser les barres d'outils...&quot; et glisser le bouton &quot;Barre d'outils des marque-pages&quot; dans la barre d'outils.">
 <!ENTITY hidebookmarksbar.button.disableMove                 "Empêcher le bouton des marque-pages d'être replacer dans la barre d'outils des marque-pages">
 <!ENTITY hidebookmarksbar.button.type                        "Comportement du bouton">
-<!ENTITY hidebookmarksbar.button.type.menu                   "menu (cliquer pour ouvrir le bouton des marque-pages">
-<!ENTITY hidebookmarksbar.button.type.button                 "bouton (si &quot;commande manuelle  switch&quot; est activée: cliquer pour faire glisser la barre d'outils des marque-pages. Sinon : cliquer pour faire glisser le panneau latéral des marque-pages">
+<!ENTITY hidebookmarksbar.button.type.menu                   "menu (cliquer pour ouvrir le menu des marque-pages">
+<!ENTITY hidebookmarksbar.button.type.button                 "bouton (si &quot;commande manuelle&quot; est activée: cliquer pour faire glisser la barre d'outils des marque-pages. Sinon : cliquer pour faire glisser le panneau latéral des marque-pages">
 <!ENTITY hidebookmarksbar.button.type.menubutton             "combinés">
 <!ENTITY hidebookmarksbar.button.commands.title              "Choississez les élèments de menu qui doivent apparaitre dans le menu déroulant">
 <!ENTITY hidebookmarksbar.button.commands.toolbar            "Afficher la barre d'outils des marque-pages *">
@@ -14,7 +14,7 @@
 <!ENTITY hidebookmarksbar.button.commands.settings           "Montrer cette fenêtre de paramètres">
 <!ENTITY hidebookmarksbar.button.description.toolbarCommand  "* Fonctionne uniquement quand l'option &quot;Commande manuelle&quot; est activée">
 
-<!ENTITY hidebookmarksbar.manual.pane                        "Commande  manuelle">
+<!ENTITY hidebookmarksbar.manual.pane                        "Commande manuelle">
 <!ENTITY hidebookmarksbar.manual.enabled                     "Activer commande manuelle">
 <!ENTITY hidebookmarksbar.manual.description                 "La barre d'outils des marque-pages peut se faire se glisser par le bouton de la barre d'outils ou par un raccourci clavier.">
 <!ENTITY hidebookmarksbar.manual.shortcut.enabled            "Activer les raccourci clavier">
