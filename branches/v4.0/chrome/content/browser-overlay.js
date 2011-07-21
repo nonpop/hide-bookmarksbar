@@ -76,7 +76,7 @@ var hidebookmarksbar =
 				break;
 			
 			case "hover.enabled":
-				this.auto.enabled = this.prefs.getBoolPref(data);
+				this.hover.enabled = this.prefs.getBoolPref(data);
 				this.setVisibility();
 				break;
 			case "hover.type":
@@ -169,24 +169,18 @@ var hidebookmarksbar =
 		if(!window.BookmarksMenuButton)
 			return;
 		
-		hidebookmarksbar.oldBMBupdatePosition.call(window.BookmarksMenuButton);
-		
-		var container = window.BookmarksMenuButton.buttonContainer;
-		var button = window.BookmarksMenuButton.button;
-		
 		var disableMove = hidebookmarksbar.prefs.getBoolPref("button.disableMove");
 		
-		if(disableMove && container && button)
+		if(disableMove)
 		{
-			if(button.parentNode != container)
-			{
-				if(button.parentNode)
-					button.parentNode.removeChild(button);
-				container.appendChild(button);
-				
-				window.BookmarksMenuButton._updateStyle();
-			}
+			var bookmarksToolbarItem = window.BookmarksMenuButton.bookmarksToolbarItem;
+			
+			bookmarksToolbarItem.parentNode.setAttribute("autohide", "true"); // make oldBMBupdatePosition think the toolbar is hidden
+			hidebookmarksbar.oldBMBupdatePosition.call(window.BookmarksMenuButton);
+			bookmarksToolbarItem.parentNode.removeAttribute("autohide"); // remove the attribute again
 		}
+		else
+			hidebookmarksbar.oldBMBupdatePosition.call(window.BookmarksMenuButton);
 	},
 	
 	manual:
