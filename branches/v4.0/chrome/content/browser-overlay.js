@@ -18,14 +18,14 @@ var hidebookmarksbar =
 			window.BookmarksMenuButton.updatePosition = this.BMBupdatePosition;
 		}
 		
-		/* changes to toolbar layout */
-		window.addEventListener("aftercustomization", this.onToolbarChange, false);
-		this.onToolbarChange();
-		
 		this.manual.visible = this.prefs.getBoolPref("manual.visible");
 		this.manual.enabled = this.prefs.getBoolPref("manual.enabled");
 		this.hover.enabled  = this.prefs.getBoolPref("hover.enabled");
 		this.auto.enabled   = this.prefs.getBoolPref("auto.enabled");
+		
+		/* changes to toolbar layout */
+		window.addEventListener("aftercustomization", this.onToolbarChange, false);
+		this.onToolbarChange();
 		
 		hidebookmarksbar.manual.onLoad();
 		hidebookmarksbar.auto.onLoad();
@@ -67,6 +67,8 @@ var hidebookmarksbar =
 			case "manual.enabled":
 				this.manual.enabled = this.prefs.getBoolPref(data);
 				this.setVisibility();
+				
+				this.onToolbarChange(); // remove the entry from the dropdown menu
 				break;
 			case "manual.visible":
 				this.manual.visible = this.prefs.getBoolPref(data);
@@ -131,6 +133,24 @@ var hidebookmarksbar =
 					button.setAttribute("type", "menu-button");
 			}
 		}
+		
+		var commands =
+		{
+			"toolbar": "BMB_viewBookmarksToolbar",
+			"sidebar": "BMB_bookmarksSidebar",
+			"manager": "BMB_bookmarksShowAll",
+			"settings": "BMB_bookmarksSettings"
+		}
+		for(var i in commands)
+		{
+			var element = document.getElementById(commands[i]);
+			if(!element)
+				continue;
+			if(i == "toolbar" && !hidebookmarksbar.manual.enabled)
+				element.hidden = true;
+			else
+				element.hidden = !hidebookmarksbar.prefs.getBoolPref("button.commands."+i);
+		}
 	},
 	
 	onToolbarButtonClick: function(ev)
@@ -177,8 +197,8 @@ var hidebookmarksbar =
 			key.setAttribute("modifiers", hidebookmarksbar.prefs.getCharPref("manual.shortcut.modifiers"));
 			key.setAttribute("key",       hidebookmarksbar.prefs.getCharPref("manual.shortcut.key"));
 			key.setAttribute("disabled", !hidebookmarksbar.prefs.getBoolPref("manual.shortcut.enabled"));
-		
-			hidebookmarksbar.manual.oldOnViewToolbarCommand = window.onViewToolbarCommand
+			
+			hidebookmarksbar.manual.oldOnViewToolbarCommand = window.onViewToolbarCommand;
 			window.onViewToolbarCommand = function(aEvent)
 			{
 				if(aEvent.originalTarget.getAttribute("toolbarId") == "PersonalToolbar")

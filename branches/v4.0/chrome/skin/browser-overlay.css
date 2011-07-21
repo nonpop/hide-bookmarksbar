@@ -7,3 +7,10 @@ toolbar[iconsize="small"] #bookmarks-menu-button
 	list-style-image: url("chrome://browser/skin/Toolbar-small.png");
 }
 
+#BMB_viewBookmarksToolbar[hidden] + #BMB_bookmarksSidebar[hidden] + menuseparator,
+#BMB_bookmarksShowAll[hidden]    + #BMB_bookmarksSettings[hidden] + menuseparator
+{
+	display:none;
+}
+
+
