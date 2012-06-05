@@ -1,6 +1,0 @@
-<!ENTITY hidebookmarksbar.keyModifiers "accel,alt">
-<!ENTITY hidebookmarksbar.key "l">
-<!ENTITY hidebookmarksbar.toolbarButtonLabel "Bookmarks Toolbar">
-<!ENTITY hidebookmarksbar.toolbarButtonTitle "Toggle Bookmarks Toolbar">
-<!ENTITY hidebookmarksbar.toolbarSettings "Settings">
-
