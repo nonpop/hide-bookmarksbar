@@ -8,7 +8,11 @@
 		<key id="hidebookmarksbarKeyset"
 		     modifiers="&hidebookmarksbar.keyModifiers;"
 		     key="&hidebookmarksbar.key;" 
-		     oncommand="hidebookmarksbar.toggle();" />
+		     oncommand="hidebookmarksbar.toggle();"
+		     ctrllabel="&hidebookmarksbar.key_ctrl;"
+		     cmdlabel="&hidebookmarksbar.key_cmd;"
+		     altlabel="&hidebookmarksbar.key_alt;"
+		     shiftlabel="&hidebookmarksbar.key_shift;" />
 	</keyset>   
 	
 	<toolbarpalette id="BrowserToolbarPalette">

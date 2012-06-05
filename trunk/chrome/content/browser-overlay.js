@@ -164,10 +164,17 @@ var hidebookmarksbar =
 			return;
 		hidebookmarksbar.lastURI = uri;
 		
-		var isHomePage = gHomeButton.getHomePage().split("|").indexOf(uri) != -1;
-		var isBlank = (uri == "about:blank");
+		var newtab = Components.classes["@mozilla.org/preferences-service;1"]
+		                       .getService(Components.interfaces.nsIPrefService)
+		                       .getBranch("browser.");
 		
-		var display = isHomePage || isBlank;
+		var display = false;
+		if(gHomeButton.getHomePage().split("|").indexOf(uri) != -1)
+			display = true;
+		if(uri == "about:blank" || uri == "about:newtab")
+			display = true;
+		if(newtab.getBoolPref("newtabpage.enabled") && newtab.getCharPref("newtab.url") == uri)
+			display = true;
 		
 		var pref = hidebookmarksbar.prefs.getBoolPref(display ? "autoShow" : "autoHide");
 		if(pref)
