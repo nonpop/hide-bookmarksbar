@@ -205,7 +205,6 @@ var hidebookmarksbar =
 		{
 			var toolbar = document.getElementById("PersonalToolbar");
 			window.setToolbarVisibility(toolbar, display);
-                        window.setToolbarVisibility(document.getElementById("nav-bar"), display);
 			
 			if(window.fullScreen && display)
 				FullScreen.mouseoverToggle(true);
